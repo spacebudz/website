@@ -1,6 +1,6 @@
 "use client";
 
-// @deno-types="npm:@types/react@18.2.60"
+// @deno-types="npm:@types/react@18.3.1"
 import * as React from "react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import { ChevronDownIcon } from "@radix-ui/react-icons";

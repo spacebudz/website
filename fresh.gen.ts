@@ -14,7 +14,7 @@ import * as $ui_calendar_mod from "./islands/ui/calendar/mod.tsx";
 import * as $ui_checkbox_mod from "./islands/ui/checkbox/mod.tsx";
 import * as $ui_popover_mod from "./islands/ui/popover/mod.tsx";
 import * as $ui_select_mod from "./islands/ui/select/mod.tsx";
-import { type Manifest } from "$fresh/server.ts";
+import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
   routes: {
