@@ -1,14 +1,14 @@
 "use client";
 
-// @deno-types="npm:@types/react@18.2.60"
+// @deno-types="npm:@types/react@18.3.1"
 import * as React from "react";
 import {
     CaretSortIcon,
     CheckIcon,
     ChevronDownIcon,
     ChevronUpIcon,
-} from "@radix-ui/react-icons.ts";
-import * as SelectPrimitive from "@radix-ui/react-select.ts";
+} from "@radix-ui/react-icons";
+import * as SelectPrimitive from "@radix-ui/react-select";
 
 import { cn } from "@/lib/utils.ts";
 

@@ -1,8 +1,8 @@
 "use client";
 
-// @deno-types="npm:@types/react@18.2.60"
+// @deno-types="npm:@types/react@18.3.1"
 import * as React from "react";
-import * as PopoverPrimitive from "@radix-ui/react-popover.ts";
+import * as PopoverPrimitive from "@radix-ui/react-popover";
 
 import { cn } from "@/lib/utils.ts";
 
