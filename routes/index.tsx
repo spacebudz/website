@@ -3,7 +3,7 @@ import Counter from "@/islands/counter.tsx";
 import { DatePickerDemo } from "@/islands/date_picker.tsx";
 
 export default function Home() {
-  const count = useSignal(3);
+  const count = useSignal(4);
   return (
     <div>
       <div className="px-4 py-8 mx-auto bg-black text-white">
