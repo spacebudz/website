@@ -2,6 +2,7 @@ import { useSignal } from "@preact/signals";
 import Counter from "@/islands/counter.tsx";
 import { DatePickerDemo } from "@/islands/date_picker.tsx";
 import GifCard from "@/islands/gifcard.tsx";
+import { AccordionDemo } from "@/islands/accordion_demo.tsx";
 
 export default function Home() {
   const count = useSignal(4);
@@ -33,9 +34,12 @@ export default function Home() {
         </div>
       </div>
       <div className="my-10 flex items-center justify-center flex-col">
-      <div className="my-10 flex items-center justify-center flex-col">
-        <GifCard />
-      </div>
+        <div className="my-10 flex items-center justify-center flex-col">
+          <GifCard />
+        </div>
+        <div className="mx-10 md:w-[400px] my-10 flex items-center justify-center flex-col">
+          <AccordionDemo />
+        </div>
       </div>
       <div className="m-6 flex items-center justify-center border-2 border-black">
         <div className="m-10 md:w-[400px]">
