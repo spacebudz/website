@@ -1,6 +1,7 @@
 import { useSignal } from "@preact/signals";
 import Counter from "@/islands/counter.tsx";
 import { DatePickerDemo } from "@/islands/date_picker.tsx";
+import GifCard from "@/islands/gifcard.tsx";
 
 export default function Home() {
   const count = useSignal(3);
@@ -30,6 +31,11 @@ export default function Home() {
         <div className="mt-8">
           <DatePickerDemo />
         </div>
+      </div>
+      <div className="my-10 flex items-center justify-center flex-col">
+      <div className="my-10 flex items-center justify-center flex-col">
+        <GifCard />
+      </div>
       </div>
       <div className="m-6 flex items-center justify-center border-2 border-black">
         <div className="m-10 md:w-[400px]">
