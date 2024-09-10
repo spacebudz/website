@@ -1,0 +1,60 @@
+{
+  "lock": false,
+  "tasks": {
+    "check": "deno fmt --check && deno lint && deno check **/*.ts && deno check **/*.tsx",
+    "cli": "echo \"import '\\$fresh/src/dev/cli.ts'\" | deno run --unstable -A -",
+    "manifest": "deno task cli manifest $(pwd)",
+    "start": "deno run -A --watch=static/,routes/ dev.ts",
+    "build": "deno run -A dev.ts build",
+    "preview": "deno run -A main.ts",
+    "update": "deno run -A -r https://fresh.deno.dev/update ."
+  },
+  "lint": {
+    "rules": {
+      "tags": ["fresh", "recommended"]
+    }
+  },
+  "exclude": ["**/_fresh/*"],
+  "imports": {
+    "@/": "./",
+    "$fresh/": "https://deno.land/x/fresh@1.6.8/",
+    "preact": "https://esm.sh/preact@10.22.0",
+    "preact/": "https://esm.sh/preact@10.22.0/",
+    "react": "https://esm.sh/preact@10.22.0/compat",
+    "react-dom": "https://esm.sh/preact@10.22.0/compat",
+    "react/jsx-runtime": "https://esm.sh/preact@10.22.0/compat/jsx-runtime",
+    "@preact/signals": "https://esm.sh/*@preact/signals@1.3.0",
+    "@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.8.0",
+    "tailwindcss": "https://esm.sh/tailwindcss@3.4.10",
+    "tailwindcss/": "https://esm.sh/tailwindcss@3.4.10/",
+    "tailwindcss/plugin": "https://esm.sh/tailwindcss@3.4.10/plugin.js",
+    "$std/": "https://deno.land/std@0.216.0/",
+    "@radix-ui/": "https://deno.land/x/netzo@0.5.119/deps/@radix-ui/",
+    "@radix-ui/react-icons.ts": "https://esm.sh/@radix-ui/react-icons@1.3.0?external=react,react-dom,react/jsx-runtime&target=es2022"
+  },
+  "compilerOptions": {
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "dom.asynciterable",
+      "deno.ns",
+      "deno.unstable"
+    ],
+    "jsx": "precompile",
+    "jsxImportSource": "preact",
+    "jsxImportSourceTypes": "npm:@types/react@18.2.60",
+    "jsxPrecompileSkipElements": [
+      "a",
+      "img",
+      "source",
+      "body",
+      "html",
+      "head",
+      "title",
+      "link",
+      "style",
+      "meta"
+    ]
+  },
+  "nodeModulesDir": true
+}
