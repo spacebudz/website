@@ -12,7 +12,6 @@ import * as $date_picker from "./islands/date_picker.tsx";
 import * as $gifcard from "./islands/gifcard.tsx";
 import * as $ui_accordion_mod from "./islands/ui/accordion/mod.tsx";
 import * as $ui_calendar_mod from "./islands/ui/calendar/mod.tsx";
-import * as $ui_card_mod from "./islands/ui/card/mod.tsx";
 import * as $ui_checkbox_mod from "./islands/ui/checkbox/mod.tsx";
 import * as $ui_popover_mod from "./islands/ui/popover/mod.tsx";
 import * as $ui_select_mod from "./islands/ui/select/mod.tsx";
@@ -32,7 +31,6 @@ const manifest = {
     "./islands/gifcard.tsx": $gifcard,
     "./islands/ui/accordion/mod.tsx": $ui_accordion_mod,
     "./islands/ui/calendar/mod.tsx": $ui_calendar_mod,
-    "./islands/ui/card/mod.tsx": $ui_card_mod,
     "./islands/ui/checkbox/mod.tsx": $ui_checkbox_mod,
     "./islands/ui/popover/mod.tsx": $ui_popover_mod,
     "./islands/ui/select/mod.tsx": $ui_select_mod,
