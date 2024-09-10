@@ -1,6 +1,6 @@
 // @deno-types="npm:@types/react@18.2.60"
 import * as React from "react";
-import { Slot } from "@radix-ui/react-slot.ts";
+import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "npm:class-variance-authority";
 
 import { cn } from "@/lib/utils.ts";

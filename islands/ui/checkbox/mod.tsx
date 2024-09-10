@@ -2,8 +2,8 @@
 
 // @deno-types="npm:@types/react@18.2.60"
 import * as React from "react";
-import * as CheckboxPrimitive from "@radix-ui/react-checkbox.ts";
-import { CheckIcon } from "@radix-ui/react-icons.ts";
+import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
+import { CheckIcon } from "@radix-ui/react-icons";
 
 import { cn } from "@/lib/utils.ts";
 

@@ -2,7 +2,7 @@
 
 // @deno-types="npm:@types/react@18.2.60"
 import * as React from "react";
-import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons.ts";
+import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { DayPicker } from "https://esm.sh/react-day-picker@8.10.1?external=react,react-dom,react/jsx-runtime&target=es2022";
 
 import { cn } from "@/lib/utils.ts";

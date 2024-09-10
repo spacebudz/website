@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { CalendarIcon } from "@radix-ui/react-icons.ts";
+import { CalendarIcon } from "@radix-ui/react-icons";
 import { format } from "npm:date-fns";
 
 import { cn } from "@/lib/utils.ts";

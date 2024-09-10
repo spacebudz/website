@@ -7,8 +7,8 @@ import {
     CheckIcon,
     ChevronDownIcon,
     ChevronUpIcon,
-} from "@radix-ui/react-icons.ts";
-import * as SelectPrimitive from "@radix-ui/react-select.ts";
+} from "@radix-ui/react-icons";
+import * as SelectPrimitive from "@radix-ui/react-select";
 
 import { cn } from "@/lib/utils.ts";
 

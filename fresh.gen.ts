@@ -9,6 +9,7 @@ import * as $greet_name_ from "./routes/greet/[name].tsx";
 import * as $index from "./routes/index.tsx";
 import * as $counter from "./islands/counter.tsx";
 import * as $date_picker from "./islands/date_picker.tsx";
+import * as $ui_accordion_mod from "./islands/ui/accordion/mod.tsx";
 import * as $ui_calendar_mod from "./islands/ui/calendar/mod.tsx";
 import * as $ui_checkbox_mod from "./islands/ui/checkbox/mod.tsx";
 import * as $ui_popover_mod from "./islands/ui/popover/mod.tsx";
@@ -26,6 +27,7 @@ const manifest = {
   islands: {
     "./islands/counter.tsx": $counter,
     "./islands/date_picker.tsx": $date_picker,
+    "./islands/ui/accordion/mod.tsx": $ui_accordion_mod,
     "./islands/ui/calendar/mod.tsx": $ui_calendar_mod,
     "./islands/ui/checkbox/mod.tsx": $ui_checkbox_mod,
     "./islands/ui/popover/mod.tsx": $ui_popover_mod,

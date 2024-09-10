@@ -2,7 +2,7 @@
 
 // @deno-types="npm:@types/react@18.2.60"
 import * as React from "react";
-import * as PopoverPrimitive from "@radix-ui/react-popover.ts";
+import * as PopoverPrimitive from "@radix-ui/react-popover";
 
 import { cn } from "@/lib/utils.ts";
 
