@@ -1,6 +1,6 @@
 import { type PageProps } from "$fresh/server.ts";
 import { Toaster } from "@/islands/ui/toast/toaster.tsx";
-import { Toaster as SonnerToaster } from "@/islands/ui/sonner/mod.tsx";
+import { ThemeProvider } from "@/islands/providers/theme_provider.tsx";
 export default function App({ Component }: PageProps) {
   return (
     <html>
@@ -11,10 +11,13 @@ export default function App({ Component }: PageProps) {
         <link rel="stylesheet" href="/styles.css" />
       </head>
       <body>
-        {/* @ts-ignore */}
-        <Component />
-        <Toaster />
-        <SonnerToaster />
+        <ThemeProvider>
+          <>
+            {/* @ts-ignore */}
+            <Component />
+            <Toaster />
+          </>
+        </ThemeProvider>
       </body>
     </html>
   );

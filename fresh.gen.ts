@@ -15,7 +15,10 @@ import * as $counter from "./islands/counter.tsx";
 import * as $data_table_mod from "./islands/data_table/mod.tsx";
 import * as $date_picker from "./islands/date_picker.tsx";
 import * as $gifcard from "./islands/gifcard.tsx";
+import * as $hooks_use_toast from "./islands/hooks/use_toast.tsx";
+import * as $providers_theme_provider from "./islands/providers/theme_provider.tsx";
 import * as $toast_demo from "./islands/toast_demo.tsx";
+import * as $toggle_dark_mode from "./islands/toggle_dark_mode.tsx";
 import * as $ui_accordion_mod from "./islands/ui/accordion/mod.tsx";
 import * as $ui_alert_dialog_mod from "./islands/ui/alert_dialog/mod.tsx";
 import * as $ui_aspect_ratio_mod from "./islands/ui/aspect_ratio/mod.tsx";
@@ -71,7 +74,10 @@ const manifest = {
     "./islands/data_table/mod.tsx": $data_table_mod,
     "./islands/date_picker.tsx": $date_picker,
     "./islands/gifcard.tsx": $gifcard,
+    "./islands/hooks/use_toast.tsx": $hooks_use_toast,
+    "./islands/providers/theme_provider.tsx": $providers_theme_provider,
     "./islands/toast_demo.tsx": $toast_demo,
+    "./islands/toggle_dark_mode.tsx": $toggle_dark_mode,
     "./islands/ui/accordion/mod.tsx": $ui_accordion_mod,
     "./islands/ui/alert_dialog/mod.tsx": $ui_alert_dialog_mod,
     "./islands/ui/aspect_ratio/mod.tsx": $ui_aspect_ratio_mod,

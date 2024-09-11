@@ -1,6 +1,6 @@
 "use client";
 
-import { useToast } from "@/components/hooks/use_toast.tsx";
+import { useToast } from "@/islands/hooks/use_toast.tsx";
 import {
     Toast,
     ToastClose,

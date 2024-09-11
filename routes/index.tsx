@@ -8,26 +8,33 @@ import { InputOTPDemo } from "@/components/input_otp_demo.tsx";
 import { ToastDemo } from "@/islands/toast_demo.tsx";
 import { Button } from "@/components/ui/button/mod.tsx";
 import { DataTable } from "@/islands/data_table/mod.tsx";
+import { ModeToggle } from "@/islands/toggle_dark_mode.tsx";
 
 export default function Home() {
   const count = useSignal(4);
   return (
     <div>
-      <div className="px-4 py-8 mx-auto bg-black text-white">
+      <div className="px-4 py-8 mx-auto bg-zinc-950">
         <div className="max-w-screen-md mx-auto flex flex-col items-center justify-center">
+          <div className="absolute top-10 right-10">
+            <ModeToggle />
+          </div>
           <img
-            className="my-6"
+            className="my-6 dark:invert"
             src="/logo.svg"
             width="128"
             height="128"
             alt="the Fresh logo: a sliced lemon dripping with juice"
           />
-          <h1 className="text-4xl font-bold">Welcome to Fresh + shadcn</h1>
-          <p className="my-4">
-            Try updating this message in the
-            <code className="mx-2">./routes/index.tsx</code> file, and refresh.
-          </p>
-          <Counter count={count} />
+          <div className="text-secondary dark:text-primary flex flex-col items-center">
+            <h1 className="text-4xl font-bold">Welcome to Fresh + shadcn</h1>
+            <p className="my-4">
+              Try updating this message in the
+              <code className="mx-2">./routes/index.tsx</code>{" "}
+              file, and refresh.
+            </p>
+            <Counter count={count} />
+          </div>
         </div>
       </div>
       <div className="my-10 flex items-center justify-center flex-col">
