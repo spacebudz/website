@@ -10,7 +10,9 @@ import * as $greet_name_ from "./routes/greet/[name].tsx";
 import * as $index from "./routes/index.tsx";
 import * as $accordion_demo from "./islands/accordion_demo.tsx";
 import * as $charts_1 from "./islands/charts.tsx";
+import * as $combobox_mod from "./islands/combobox/mod.tsx";
 import * as $counter from "./islands/counter.tsx";
+import * as $data_table_mod from "./islands/data_table/mod.tsx";
 import * as $date_picker from "./islands/date_picker.tsx";
 import * as $gifcard from "./islands/gifcard.tsx";
 import * as $toast_demo from "./islands/toast_demo.tsx";
@@ -64,7 +66,9 @@ const manifest = {
   islands: {
     "./islands/accordion_demo.tsx": $accordion_demo,
     "./islands/charts.tsx": $charts_1,
+    "./islands/combobox/mod.tsx": $combobox_mod,
     "./islands/counter.tsx": $counter,
+    "./islands/data_table/mod.tsx": $data_table_mod,
     "./islands/date_picker.tsx": $date_picker,
     "./islands/gifcard.tsx": $gifcard,
     "./islands/toast_demo.tsx": $toast_demo,

@@ -7,6 +7,7 @@ import { CarouselDemo } from "@/components/carousel_demo.tsx";
 import { InputOTPDemo } from "@/components/input_otp_demo.tsx";
 import { ToastDemo } from "@/islands/toast_demo.tsx";
 import { Button } from "@/components/ui/button/mod.tsx";
+import { DataTable } from "@/islands/data_table/mod.tsx";
 
 export default function Home() {
   const count = useSignal(4);
@@ -174,6 +175,11 @@ export default function Home() {
             The moral of the story is: never underestimate the power of a good
             laugh and always be careful of bad ideas.
           </p>
+        </div>
+      </div>
+      <div className="flex items-center justify-center">
+        <div className="mx-10 md:w-[800px] my-10">
+          <DataTable />
         </div>
       </div>
     </div>
