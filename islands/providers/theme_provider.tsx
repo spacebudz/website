@@ -2,6 +2,7 @@
 
 // @deno-types="npm:@types/react@18.3.1"
 import * as React from "react";
+import { IS_BROWSER } from "$fresh/runtime.ts";
 
 type Theme = "dark" | "light" | "system";
 
@@ -32,7 +33,9 @@ export function ThemeProvider({
     ...props
 }: ThemeProviderProps) {
     const [theme, setTheme] = React.useState<Theme>(
-        () => (localStorage.getItem(storageKey) as Theme) || defaultTheme,
+        () =>
+            (IS_BROWSER && localStorage.getItem(storageKey) as Theme) ||
+            defaultTheme,
     );
 
     React.useEffect(() => {
@@ -57,7 +60,7 @@ export function ThemeProvider({
     const value = {
         theme,
         setTheme: (theme: Theme) => {
-            localStorage.setItem(storageKey, theme);
+            if (IS_BROWSER) localStorage.setItem(storageKey, theme);
             setTheme(theme);
         },
     };
