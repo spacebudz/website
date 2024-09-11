@@ -2,7 +2,7 @@
 
 // @deno-types="npm:@types/react@18.3.1"
 import * as React from "react";
-import * as RechartsPrimitive from "https://esm.sh/recharts@2.12.7?external=react,react-dom,react/jsx-runtime&target=es2022";
+import * as RechartsPrimitive from "recharts";
 
 import { cn } from "@/lib/utils.ts";
 

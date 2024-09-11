@@ -5,9 +5,11 @@
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $api_joke from "./routes/api/joke.ts";
+import * as $charts from "./routes/charts.tsx";
 import * as $greet_name_ from "./routes/greet/[name].tsx";
 import * as $index from "./routes/index.tsx";
 import * as $accordion_demo from "./islands/accordion_demo.tsx";
+import * as $charts_1 from "./islands/charts.tsx";
 import * as $counter from "./islands/counter.tsx";
 import * as $date_picker from "./islands/date_picker.tsx";
 import * as $gifcard from "./islands/gifcard.tsx";
@@ -55,11 +57,13 @@ const manifest = {
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
     "./routes/api/joke.ts": $api_joke,
+    "./routes/charts.tsx": $charts,
     "./routes/greet/[name].tsx": $greet_name_,
     "./routes/index.tsx": $index,
   },
   islands: {
     "./islands/accordion_demo.tsx": $accordion_demo,
+    "./islands/charts.tsx": $charts_1,
     "./islands/counter.tsx": $counter,
     "./islands/date_picker.tsx": $date_picker,
     "./islands/gifcard.tsx": $gifcard,

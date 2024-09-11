@@ -30,6 +30,7 @@
     "tailwindcss/plugin": "https://esm.sh/tailwindcss@3.4.10/plugin.js",
     "$std/": "https://deno.land/std@0.216.0/",
     "sonner": "https://esm.sh/sonner@1.5.0?external=react,react-dom,react/jsx-runtime&target=es2022",
+    "recharts": "https://esm.sh/recharts@2.12.7?external=react,react-dom,react/jsx-runtime&target=es2022",
 
     "@radix-ui/react-accessible-icon": "https://esm.sh/@radix-ui/react-accessible-icon@1.1.0?external=react,react-dom,react/jsx-runtime&target=es2022",
     "@radix-ui/react-accordion": "https://esm.sh/@radix-ui/react-accordion@1.2.0?external=react,react-dom,react/jsx-runtime&target=es2022",

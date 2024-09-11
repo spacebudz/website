@@ -6,6 +6,7 @@ import { AccordionDemo } from "@/islands/accordion_demo.tsx";
 import { CarouselDemo } from "@/components/carousel_demo.tsx";
 import { InputOTPDemo } from "@/components/input_otp_demo.tsx";
 import { ToastDemo } from "@/islands/toast_demo.tsx";
+import { Button } from "@/components/ui/button/mod.tsx";
 
 export default function Home() {
   const count = useSignal(4);
@@ -51,6 +52,11 @@ export default function Home() {
         </div>
         <div className="mx-10 md:w-[400px] my-10 flex items-center justify-center flex-col">
           <ToastDemo />
+        </div>
+        <div className="mx-10 md:w-[400px] my-10 flex items-center justify-center flex-col">
+          <Button asChild>
+            <a href="/charts">Go to charts</a>
+          </Button>
         </div>
       </div>
       <div className="m-6 flex items-center justify-center border-2 border-black">
