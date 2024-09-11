@@ -1,4 +1,6 @@
 import { type PageProps } from "$fresh/server.ts";
+import { Toaster } from "@/islands/ui/toast/toaster.tsx";
+import { Toaster as SonnerToaster } from "@/islands/ui/sonner/mod.tsx";
 export default function App({ Component }: PageProps) {
   return (
     <html>
@@ -11,6 +13,8 @@ export default function App({ Component }: PageProps) {
       <body>
         {/* @ts-ignore */}
         <Component />
+        <Toaster />
+        <SonnerToaster />
       </body>
     </html>
   );

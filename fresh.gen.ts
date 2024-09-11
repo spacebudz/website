@@ -11,11 +11,43 @@ import * as $accordion_demo from "./islands/accordion_demo.tsx";
 import * as $counter from "./islands/counter.tsx";
 import * as $date_picker from "./islands/date_picker.tsx";
 import * as $gifcard from "./islands/gifcard.tsx";
+import * as $toast_demo from "./islands/toast_demo.tsx";
 import * as $ui_accordion_mod from "./islands/ui/accordion/mod.tsx";
+import * as $ui_alert_dialog_mod from "./islands/ui/alert_dialog/mod.tsx";
+import * as $ui_aspect_ratio_mod from "./islands/ui/aspect_ratio/mod.tsx";
+import * as $ui_avatar_mod from "./islands/ui/avatar/mod.tsx";
 import * as $ui_calendar_mod from "./islands/ui/calendar/mod.tsx";
+import * as $ui_carousel_mod from "./islands/ui/carousel/mod.tsx";
+import * as $ui_chart_mod from "./islands/ui/chart/mod.tsx";
 import * as $ui_checkbox_mod from "./islands/ui/checkbox/mod.tsx";
+import * as $ui_collapsible_mod from "./islands/ui/collapsible/mod.tsx";
+import * as $ui_command_mod from "./islands/ui/command/mod.tsx";
+import * as $ui_context_menu_mod from "./islands/ui/context_menu/mod.tsx";
+import * as $ui_dialog_mod from "./islands/ui/dialog/mod.tsx";
+import * as $ui_drawer_mod from "./islands/ui/drawer/mod.tsx";
+import * as $ui_dropdown_menu_mod from "./islands/ui/dropdown_menu/mod.tsx";
+import * as $ui_form_mod from "./islands/ui/form/mod.tsx";
+import * as $ui_hover_card_mod from "./islands/ui/hover_card/mod.tsx";
+import * as $ui_input_otp_mod from "./islands/ui/input_otp/mod.tsx";
+import * as $ui_label_mod from "./islands/ui/label/mod.tsx";
+import * as $ui_menubar_mod from "./islands/ui/menubar/mod.tsx";
 import * as $ui_popover_mod from "./islands/ui/popover/mod.tsx";
+import * as $ui_progress_mod from "./islands/ui/progress/mod.tsx";
+import * as $ui_radio_group_mod from "./islands/ui/radio_group/mod.tsx";
+import * as $ui_resizable_mod from "./islands/ui/resizable/mod.tsx";
+import * as $ui_scroll_area_mod from "./islands/ui/scroll_area/mod.tsx";
 import * as $ui_select_mod from "./islands/ui/select/mod.tsx";
+import * as $ui_separator_mod from "./islands/ui/separator/mod.tsx";
+import * as $ui_sheet_mod from "./islands/ui/sheet/mod.tsx";
+import * as $ui_slider_mod from "./islands/ui/slider/mod.tsx";
+import * as $ui_sonner_mod from "./islands/ui/sonner/mod.tsx";
+import * as $ui_switch_mod from "./islands/ui/switch/mod.tsx";
+import * as $ui_tabs_mod from "./islands/ui/tabs/mod.tsx";
+import * as $ui_toast_mod from "./islands/ui/toast/mod.tsx";
+import * as $ui_toast_toaster from "./islands/ui/toast/toaster.tsx";
+import * as $ui_toggle_mod from "./islands/ui/toggle/mod.tsx";
+import * as $ui_toggle_group_mod from "./islands/ui/toggle_group/mod.tsx";
+import * as $ui_tooltip_mod from "./islands/ui/tooltip/mod.tsx";
 import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -31,11 +63,43 @@ const manifest = {
     "./islands/counter.tsx": $counter,
     "./islands/date_picker.tsx": $date_picker,
     "./islands/gifcard.tsx": $gifcard,
+    "./islands/toast_demo.tsx": $toast_demo,
     "./islands/ui/accordion/mod.tsx": $ui_accordion_mod,
+    "./islands/ui/alert_dialog/mod.tsx": $ui_alert_dialog_mod,
+    "./islands/ui/aspect_ratio/mod.tsx": $ui_aspect_ratio_mod,
+    "./islands/ui/avatar/mod.tsx": $ui_avatar_mod,
     "./islands/ui/calendar/mod.tsx": $ui_calendar_mod,
+    "./islands/ui/carousel/mod.tsx": $ui_carousel_mod,
+    "./islands/ui/chart/mod.tsx": $ui_chart_mod,
     "./islands/ui/checkbox/mod.tsx": $ui_checkbox_mod,
+    "./islands/ui/collapsible/mod.tsx": $ui_collapsible_mod,
+    "./islands/ui/command/mod.tsx": $ui_command_mod,
+    "./islands/ui/context_menu/mod.tsx": $ui_context_menu_mod,
+    "./islands/ui/dialog/mod.tsx": $ui_dialog_mod,
+    "./islands/ui/drawer/mod.tsx": $ui_drawer_mod,
+    "./islands/ui/dropdown_menu/mod.tsx": $ui_dropdown_menu_mod,
+    "./islands/ui/form/mod.tsx": $ui_form_mod,
+    "./islands/ui/hover_card/mod.tsx": $ui_hover_card_mod,
+    "./islands/ui/input_otp/mod.tsx": $ui_input_otp_mod,
+    "./islands/ui/label/mod.tsx": $ui_label_mod,
+    "./islands/ui/menubar/mod.tsx": $ui_menubar_mod,
     "./islands/ui/popover/mod.tsx": $ui_popover_mod,
+    "./islands/ui/progress/mod.tsx": $ui_progress_mod,
+    "./islands/ui/radio_group/mod.tsx": $ui_radio_group_mod,
+    "./islands/ui/resizable/mod.tsx": $ui_resizable_mod,
+    "./islands/ui/scroll_area/mod.tsx": $ui_scroll_area_mod,
     "./islands/ui/select/mod.tsx": $ui_select_mod,
+    "./islands/ui/separator/mod.tsx": $ui_separator_mod,
+    "./islands/ui/sheet/mod.tsx": $ui_sheet_mod,
+    "./islands/ui/slider/mod.tsx": $ui_slider_mod,
+    "./islands/ui/sonner/mod.tsx": $ui_sonner_mod,
+    "./islands/ui/switch/mod.tsx": $ui_switch_mod,
+    "./islands/ui/tabs/mod.tsx": $ui_tabs_mod,
+    "./islands/ui/toast/mod.tsx": $ui_toast_mod,
+    "./islands/ui/toast/toaster.tsx": $ui_toast_toaster,
+    "./islands/ui/toggle/mod.tsx": $ui_toggle_mod,
+    "./islands/ui/toggle_group/mod.tsx": $ui_toggle_group_mod,
+    "./islands/ui/tooltip/mod.tsx": $ui_tooltip_mod,
   },
   baseUrl: import.meta.url,
 } satisfies Manifest;

@@ -3,6 +3,9 @@ import Counter from "@/islands/counter.tsx";
 import { DatePickerDemo } from "@/islands/date_picker.tsx";
 import GifCard from "@/islands/gifcard.tsx";
 import { AccordionDemo } from "@/islands/accordion_demo.tsx";
+import { CarouselDemo } from "@/components/carousel_demo.tsx";
+import { InputOTPDemo } from "@/components/input_otp_demo.tsx";
+import { ToastDemo } from "@/islands/toast_demo.tsx";
 
 export default function Home() {
   const count = useSignal(4);
@@ -39,6 +42,15 @@ export default function Home() {
         </div>
         <div className="mx-10 md:w-[400px] my-10 flex items-center justify-center flex-col">
           <AccordionDemo />
+        </div>
+        <div className="mx-10 md:w-[400px] my-10 flex items-center justify-center flex-col">
+          <CarouselDemo />
+        </div>
+        <div className="mx-10 md:w-[400px] my-10 flex items-center justify-center flex-col">
+          <InputOTPDemo />
+        </div>
+        <div className="mx-10 md:w-[400px] my-10 flex items-center justify-center flex-col">
+          <ToastDemo />
         </div>
       </div>
       <div className="m-6 flex items-center justify-center border-2 border-black">
