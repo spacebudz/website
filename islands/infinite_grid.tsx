@@ -4,6 +4,7 @@ import * as React from "react";
 import { useIsIntersecting } from "@/islands/hooks/use_is_intersecting.tsx";
 import { cn } from "@/lib/utils.ts";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card/mod.tsx";
+import { IS_BROWSER } from "$fresh/runtime.ts";
 
 const BATCH = 50;
 
@@ -12,7 +13,7 @@ export function InfiniteGrid() {
     { page: number; data: number[]; isDone: boolean }
   >(
     JSON.parse(
-      sessionStorage.getItem("pageData") ||
+      (IS_BROWSER && sessionStorage.getItem("pageData")) ||
         JSON.stringify({ page: 0, data: [...Array(BATCH)], isDone: false }),
     ),
   );
