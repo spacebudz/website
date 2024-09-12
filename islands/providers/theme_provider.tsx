@@ -39,7 +39,7 @@ export function ThemeProvider({
     );
 
     React.useEffect(() => {
-        const root = window.document.documentElement;
+        const root = globalThis.document.documentElement;
 
         root.classList.remove("light", "dark");
 

@@ -78,6 +78,10 @@ export default {
         "accordion-up": "accordion-up 0.2s ease-out",
         "caret-blink": "caret-blink 1.25s ease-out infinite",
       },
+      gridTemplateColumns: {
+        "lg-infinite": "repeat(auto-fill, minmax(max(10%, 300px), 1fr))",
+        "infinite": "repeat(auto-fill, minmax(max(30%, 150px), 1fr))",
+      },
     },
   },
   plugins: [animate],

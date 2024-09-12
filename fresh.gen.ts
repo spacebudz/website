@@ -8,6 +8,7 @@ import * as $api_joke from "./routes/api/joke.ts";
 import * as $charts from "./routes/charts.tsx";
 import * as $greet_name_ from "./routes/greet/[name].tsx";
 import * as $index from "./routes/index.tsx";
+import * as $items from "./routes/items.tsx";
 import * as $accordion_demo from "./islands/accordion_demo.tsx";
 import * as $charts_1 from "./islands/charts.tsx";
 import * as $combobox_mod from "./islands/combobox/mod.tsx";
@@ -15,7 +16,9 @@ import * as $counter from "./islands/counter.tsx";
 import * as $data_table_mod from "./islands/data_table/mod.tsx";
 import * as $date_picker from "./islands/date_picker.tsx";
 import * as $gifcard from "./islands/gifcard.tsx";
+import * as $hooks_use_is_intersecting from "./islands/hooks/use_is_intersecting.tsx";
 import * as $hooks_use_toast from "./islands/hooks/use_toast.tsx";
+import * as $infinite_grid from "./islands/infinite_grid.tsx";
 import * as $providers_theme_provider from "./islands/providers/theme_provider.tsx";
 import * as $toast_demo from "./islands/toast_demo.tsx";
 import * as $toggle_dark_mode from "./islands/toggle_dark_mode.tsx";
@@ -65,6 +68,7 @@ const manifest = {
     "./routes/charts.tsx": $charts,
     "./routes/greet/[name].tsx": $greet_name_,
     "./routes/index.tsx": $index,
+    "./routes/items.tsx": $items,
   },
   islands: {
     "./islands/accordion_demo.tsx": $accordion_demo,
@@ -74,7 +78,9 @@ const manifest = {
     "./islands/data_table/mod.tsx": $data_table_mod,
     "./islands/date_picker.tsx": $date_picker,
     "./islands/gifcard.tsx": $gifcard,
+    "./islands/hooks/use_is_intersecting.tsx": $hooks_use_is_intersecting,
     "./islands/hooks/use_toast.tsx": $hooks_use_toast,
+    "./islands/infinite_grid.tsx": $infinite_grid,
     "./islands/providers/theme_provider.tsx": $providers_theme_provider,
     "./islands/toast_demo.tsx": $toast_demo,
     "./islands/toggle_dark_mode.tsx": $toggle_dark_mode,
