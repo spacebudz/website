@@ -14,7 +14,7 @@ export default function ItemsPage() {
                 </style>
             </Head>
             <div className="flex justify-center items-center">
-                <div className="w-[1200px] m-10">
+                <div className="my-10 mx-8 lg:mx-30 w-full">
                     <InfiniteGrid />
                 </div>
             </div>

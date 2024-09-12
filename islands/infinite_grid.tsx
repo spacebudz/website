@@ -40,7 +40,7 @@ export function InfiniteGrid() {
       {pageData.data.length > 0
         ? (
           <div>
-            <div className="grid grid-cols-infinite lg:grid-cols-lg-infinite gap-1 md:gap-2 overflow-hidden">
+            <div className="grid grid-cols-infinite lg:grid-cols-lg-infinite gap-3 md:gap-5 overflow-hidden">
               {pageData.data.slice(0, pageData.page * BATCH + BATCH).map((
                 _,
                 index,
