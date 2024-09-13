@@ -14,7 +14,7 @@ export default function Home() {
   const count = useSignal(4);
   return (
     <div>
-      <div className="px-4 py-8 mx-auto bg-zinc-950">
+      <div className="px-4 py-8 mx-auto bg-gray-950">
         <div className="max-w-screen-md mx-auto flex flex-col items-center justify-center">
           <div className="absolute top-10 right-10">
             <ModeToggle />
