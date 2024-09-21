@@ -1,0 +1,422 @@
+// @deno-types="npm:@types/react@18.3.1"
+import * as React from "react";
+import {
+    DashedCircle,
+    PartialCircle,
+} from "@/islands/circle_animation/mod.tsx";
+import { Button } from "@/components/ui/button/mod.tsx";
+import {
+    CheckIcon,
+    ChevronLeftIcon,
+    CodeIcon,
+    CopyIcon,
+} from "@radix-ui/react-icons";
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card/mod.tsx";
+import { cn } from "@/lib/utils.ts";
+import { Badge } from "@/components/ui/badge/mod.tsx";
+import { useObserveElementDimension } from "@/islands/hooks/use_observe_dimension.tsx";
+import type { Metadata } from "@/routes/budz/[id].tsx";
+
+export type BudProps = {
+    id: number;
+    metadata: Metadata;
+    asset: { policyId: string; assetName: string };
+};
+
+export function Bud({ id, metadata, asset }: BudProps) {
+    const src = `https://spacebudz.mypinata.cloud/ipfs/${
+        metadata.image.split("ipfs://")[1]
+    }?pinataGatewayToken=sSzgtarDGSZukrz9lNYbbF30wPGLmIr_UWug05lQPddzrCK5tXa-G-QI7zMgG79m`;
+    const [isLoading, setIsLoading] = React.useState<boolean>(true);
+    const [isShowingMetadata, setIsShowingMetadata] = React.useState<boolean>(
+        false,
+    );
+
+    React.useEffect(() => {
+        // preload image
+        const image = new Image();
+        image.src = src;
+        image.onload = () => {
+            setIsLoading(false);
+        };
+        return () => {
+            image.src = "";
+        };
+    }, []);
+
+    return (
+        <div className="w-full flex flex-col items-center">
+            <div className="flex items-center justify-center h-[10vh] w-full pb-6 pt-10 lg:py-0">
+                <Button asChild variant="ghost">
+                    <a
+                        className="flex justify-center items-center space-x-2"
+                        href="/budz/collection"
+                        onClick={(e) => {
+                            if (
+                                new URL("/budz/collection", globalThis.origin)
+                                    .href === document?.referrer
+                            ) {
+                                e.preventDefault();
+                                globalThis.history.back();
+                            }
+                        }}
+                    >
+                        <ChevronLeftIcon className="w-5 h-5" />
+                        <div className="text-lg">Bud #{id}</div>
+                    </a>
+                </Button>
+            </div>
+            <div className="flex justify-center w-full h-full lg:min-h-[90vh] flex-col lg:flex-row pt-6">
+                {!isLoading && (
+                    <>
+                        <div className="lg:w-3/5 h-full flex justify-center w-full px-2 lg:px-0">
+                            <div className="w-full lg:w-[80%] h-full flex items-center">
+                                <div className="relative w-full h-0 pb-[100%] overflow-hidden">
+                                    <>
+                                        <div className="absolute w-full h-full flex items-center justify-center">
+                                            <DashedCircle
+                                                className="w-[93%] h-[93%] animate-out opacity-0 fade-out-70 spin-out-45 duration-1000 delay-150 fill-mode-forwards"
+                                                dashes={300}
+                                                dashLength={0.04}
+                                            />
+                                        </div>
+                                        <PartialCircle className="absolute w-full h-full animate-out spin-out-[-90deg] fade-out-100 duration-1000 opacity-0 delay-500 fill-mode-forwards" />
+                                        <PartialCircle className="absolute w-full h-full animate-out spin-out-[90deg] fade-out-100 duration-1000 opacity-0 delay-500 fill-mode-forwards" />
+                                        <img
+                                            className="absolute w-full h-full animate-in fade-in zoom-in-90 duration-500"
+                                            src={src}
+                                        />
+                                    </>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="w-full h-full lg:w-2/5 flex flex-col items-center px-6 pt-6 lg:px-0 lg:pt-0 lg:pr-12 animate-out opacity-0 fade-out-100 delay-1000 duration-1000 fill-mode-forwards">
+                            <div className="text-3xl font-bold text-left w-full">
+                                <a href="#">{metadata.type}</a>
+                            </div>
+                            <div className="flex w-full mt-4 space-x-2">
+                                <Card className="w-full max-w-[300px] h-[100px] border overflow-hidden relative border-none">
+                                    <img
+                                        draggable={false}
+                                        className={cn(
+                                            "-left-36 absolute min-w-[800px]",
+                                            metadata.type === "Dino"
+                                                ? "-top-[270px]"
+                                                : "-top-72",
+                                        )}
+                                        src={src}
+                                    />
+                                </Card>
+                            </div>
+                            <div className="w-full flex-wrap flex items-center justify-start mt-4 gap-4">
+                                <Button
+                                    className={cn(
+                                        isShowingMetadata && "bg-border",
+                                    )}
+                                    size="sm"
+                                    variant="outline"
+                                    onClick={() =>
+                                        setIsShowingMetadata((
+                                            isShowingMetadata,
+                                        ) => !isShowingMetadata)}
+                                >
+                                    <CodeIcon className="mr-1" />
+                                    <div>Metadata</div>
+                                </Button>
+                                <CopyButton data={metadata.sha256.slice(2)}>
+                                    SHA-256
+                                </CopyButton>
+                                <CopyButton
+                                    data={metadata.image.split("ipfs://")[1]}
+                                >
+                                    IPFS-Hash
+                                </CopyButton>
+                            </div>
+                            {isShowingMetadata && (
+                                <Card className="mt-6 w-full">
+                                    <CardHeader>
+                                        <CardTitle>
+                                            Metadata
+                                        </CardTitle>
+                                    </CardHeader>
+                                    <CardContent className="flex items-center justify-center relative">
+                                        <pre className="whitespace-pre-wrap break-all text-xs">
+                                        <code>
+                                            {JSON.stringify(metadata,null, 2)}
+                                        </code>
+                                        </pre>
+                                    </CardContent>
+                                </Card>
+                            )}
+                            <Card className="mt-6 w-full">
+                                <CardHeader>
+                                    <CardTitle>
+                                        Gadgets ({metadata.traits.length})
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent className="flex items-center justify-center relative">
+                                    <img
+                                        src="/sketch.svg"
+                                        className="w-full max-w-[300px] invert dark:invert-0"
+                                    />
+                                    <GadgetsContainer
+                                        gadgets={metadata.traits}
+                                        sha256={metadata.sha256}
+                                    />
+                                </CardContent>
+                            </Card>
+                            <Card className="mt-6 w-full">
+                                <CardHeader>
+                                    <CardTitle>View on</CardTitle>
+                                </CardHeader>
+                                <CardContent className="flex items-center space-x-1">
+                                    <div className="flex flex-col justify-center">
+                                        <div className="flex items-center">
+                                            <img
+                                                draggable={false}
+                                                src="https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://cardanoscan.io&size=32"
+                                                className="w-4 h-4"
+                                            />
+                                            <Button asChild variant="link">
+                                                <a
+                                                    href={`https://cardanoscan.io/token/${
+                                                        asset.policyId +
+                                                        asset.assetName
+                                                    }`}
+                                                    target="_blank"
+                                                >
+                                                    cardanoscan.io
+                                                </a>
+                                            </Button>
+                                        </div>
+                                        <div className="flex items-center">
+                                            <img
+                                                draggable={false}
+                                                src="https://spacebudz.io/favicon-32x32.png"
+                                                className="w-4 h-4"
+                                            />
+                                            <Button asChild variant="link">
+                                                <a
+                                                    href={`https://spacebudz.io/spacebud/${id}/`}
+                                                    target="_blank"
+                                                >
+                                                    store.spacebudz.io
+                                                </a>
+                                            </Button>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col justify-center">
+                                        <div className="flex items-center">
+                                            <img
+                                                draggable={false}
+                                                src="https://jpg.store/favicon.ico"
+                                                className="w-4 h-4"
+                                            />
+                                            <Button asChild variant="link">
+                                                <a
+                                                    href={`https://www.jpg.store/asset/${
+                                                        asset.policyId +
+                                                        asset.assetName
+                                                    }`}
+                                                    target="_blank"
+                                                >
+                                                    jpg.store
+                                                </a>
+                                            </Button>
+                                        </div>
+                                        <div className="flex items-center">
+                                            <img
+                                                draggable={false}
+                                                src="https://wayup.io/favicon.ico"
+                                                className="w-4 h-4"
+                                            />
+                                            <Button asChild variant="link">
+                                                <a
+                                                    href={`https://www.wayup.io/collection/${asset.policyId}/asset/${asset.assetName}`}
+                                                    target="_blank"
+                                                >
+                                                    wayup.io
+                                                </a>
+                                            </Button>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </div>
+                    </>
+                )}
+            </div>
+        </div>
+    );
+}
+
+function CopyButton(
+    { children, data }: React.PropsWithChildren & { data: string },
+) {
+    const [isCopied, setIsCopied] = React.useState<boolean>(false);
+    const timeout = React.useRef<number>();
+
+    React.useEffect(() => {
+        if (isCopied) {
+            timeout.current = setTimeout(() => setIsCopied(false), 1000);
+        }
+        return () => {
+            clearTimeout(timeout.current);
+        };
+    }, [isCopied]);
+
+    return (
+        <Button
+            size="sm"
+            variant="outline"
+            onClick={() =>
+                navigator.clipboard.writeText(data).then(() =>
+                    setIsCopied(true)
+                )}
+        >
+            {isCopied
+                ? <CheckIcon className="mr-1" />
+                : <CopyIcon className="mr-1" />}
+            {children}
+        </Button>
+    );
+}
+
+function GadgetsContainer(
+    { gadgets, sha256 }: {
+        gadgets: Metadata["traits"];
+        sha256: Metadata["sha256"];
+    },
+) {
+    function CurvedLine(
+        { from, to, key }: {
+            from: { x: number; y: number };
+            to: { x: number; y: number };
+            key: React.Key;
+        },
+    ) {
+        const controlPointX = (from.x + to.x) / 2;
+        const controlPointY = from.y > to.y ? from.y - 80 : from.y + 80; // Increase vertical offset for more curvature
+
+        return (
+            <svg
+                key={key}
+                className="absolute left-0 top-0 w-full h-full pointer-events-none stroke-primary opacity-50 stroke-1 fill-none"
+            >
+                <path
+                    d={`M ${from.x + 20} ${from.y + 20} 
+                 Q ${controlPointX} ${controlPointY}, 
+                 ${to.x + 20} ${to.y + 20}`}
+                    strokeDasharray="5, 5"
+                />
+            </svg>
+        );
+    }
+
+    const { ref, dimension } = useObserveElementDimension<HTMLDivElement>();
+
+    function shuffleArrayWithSeed<T>(array: T[], seed: string): T[] {
+        function cyrb128(str: string): number[] {
+            let h1 = 1779033703,
+                h2 = 3144134277,
+                h3 = 1013904242,
+                h4 = 2773480762;
+            for (let i = 0, k; i < str.length; i++) {
+                k = str.charCodeAt(i);
+                h1 = h2 ^ Math.imul(h1 ^ k, 597399067);
+                h2 = h3 ^ Math.imul(h2 ^ k, 2869860233);
+                h3 = h4 ^ Math.imul(h3 ^ k, 951274213);
+                h4 = h1 ^ Math.imul(h4 ^ k, 2716044179);
+            }
+            h1 = Math.imul(h3 ^ (h1 >>> 18), 597399067);
+            h2 = Math.imul(h4 ^ (h2 >>> 22), 2869860233);
+            h3 = Math.imul(h1 ^ (h3 >>> 17), 951274213);
+            h4 = Math.imul(h2 ^ (h4 >>> 19), 2716044179);
+            h1 ^= h2 ^ h3 ^ h4, h2 ^= h1, h3 ^= h1, h4 ^= h1;
+            return [h1 >>> 0, h2 >>> 0, h3 >>> 0, h4 >>> 0];
+        }
+
+        function sfc32(...[a, b, c, d]: number[]) {
+            return function () {
+                a |= 0;
+                b |= 0;
+                c |= 0;
+                d |= 0;
+                const t = (a + b | 0) + d | 0;
+                d = d + 1 | 0;
+                a = b ^ b >>> 9;
+                b = c + (c << 3) | 0;
+                c = c << 21 | c >>> 11;
+                c = c + t | 0;
+                return (t >>> 0) / 4294967296;
+            };
+        }
+
+        const random = sfc32(...cyrb128(seed));
+
+        const shuffledArray = array.slice();
+
+        for (let i = shuffledArray.length - 1; i > 0; i--) {
+            const j = Math.floor(random() * (i + 1));
+            [shuffledArray[i], shuffledArray[j]] = [
+                shuffledArray[j],
+                shuffledArray[i],
+            ];
+        }
+
+        return shuffledArray;
+    }
+
+    const positions = shuffleArrayWithSeed([
+        { x: 0.3, y: 0.25 },
+        { x: 0.82, y: 0.63 },
+        { x: 0.6, y: -0.05 },
+        { x: 0.16, y: 0.05 },
+        { x: 0.09, y: 0.68 },
+        { x: 0.68, y: 0.47 },
+        { x: 0.18, y: 0.9 },
+        { x: 0.8, y: 0.31 },
+        { x: 0.67, y: 0.96 },
+        { x: 0.12, y: 0.47 },
+        { x: 0.6, y: 0.79 },
+        { x: 0.78, y: 0.13 },
+    ], sha256.slice(2));
+
+    const badges = gadgets.map((gadget, index) => ({
+        gadget,
+        position: {
+            x: positions[index].x * (dimension.width - 60),
+            y: positions[index].y * (dimension.height - 40),
+        },
+    }));
+
+    return (
+        <div ref={ref} className="absolute w-full h-full">
+            {badges.map(({ position }, index) => (
+                <CurvedLine
+                    key={index}
+                    from={{
+                        x: dimension.width / 2 - 20,
+                        y: dimension.height / 2 - 12,
+                    }}
+                    to={position}
+                />
+            ))}
+            {badges.map(({ gadget, position }, index) => (
+                <Badge
+                    key={index}
+                    variant="outline"
+                    className="absolute bg-background max-w-24 text-center"
+                    style={{ left: position.x, top: position.y }}
+                >
+                    <a href="#">{gadget}</a>
+                </Badge>
+            ))}
+        </div>
+    );
+}

@@ -16,6 +16,11 @@ export default {
       },
     },
     extend: {
+      // custom
+      backgroundImage: {
+        "wardrobe":
+          "linear-gradient(hsl(var(--background)), hsl(var(--background) / 0.82)), url(/wardrobe.jpeg)",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -77,10 +82,6 @@ export default {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "caret-blink": "caret-blink 1.25s ease-out infinite",
-      },
-      gridTemplateColumns: {
-        "lg-infinite": "repeat(auto-fill, minmax(max(10%, 300px), 1fr))",
-        "infinite": "repeat(auto-fill, minmax(max(30%, 150px), 1fr))",
       },
     },
   },

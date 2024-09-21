@@ -1,11 +1,12 @@
 "use client";
 
+// @deno-types="npm:@types/react@18.3.1"
 import * as React from "react";
 import { useIsIntersecting } from "@/islands/hooks/use_is_intersecting.tsx";
-import { cn } from "@/lib/utils.ts";
-import { Card } from "@/components/ui/card/mod.tsx";
+import { cn, isMobile } from "@/lib/utils.ts";
 import { IS_BROWSER } from "$fresh/runtime.ts";
 import metadata from "@/data/metadata.json" with { type: "json" };
+import { PartialCircle } from "@/islands/circle_animation/mod.tsx";
 
 const BATCH = 20;
 
@@ -66,7 +67,7 @@ export function InfiniteGrid() {
       {data.array.length > 0
         ? (
           <div className="relative flex justify-center items-center flex-col w-full">
-            <div className="relative grid grid-cols-[repeat(auto-fit,minmax(300px,300px))] gap-3 overflow-hidden w-full justify-center">
+            <div className="relative grid grid-cols-[repeat(auto-fit,minmax(300px,300px))] gap-3 w-full justify-center">
               {data.array.map((
                 metadata,
                 index,
@@ -133,7 +134,7 @@ function Item(
     if (imageRef.current) {
       imageRef.current.src = `https://spacebudz.mypinata.cloud/ipfs/${
         metadata.image.split("ipfs://")[1]
-      }?pinataGatewayToken=sSzgtarDGSZukrz9lNYbbF30wPGLmIr_UWug05lQPddzrCK5tXa-G-QI7zMgG79m&img-width=600&img-quality=40`;
+      }?pinataGatewayToken=sSzgtarDGSZukrz9lNYbbF30wPGLmIr_UWug05lQPddzrCK5tXa-G-QI7zMgG79m&img-width=500`;
       imageRef.current.onload = () => {
         setIsLoadingImage(false);
       };
@@ -141,6 +142,7 @@ function Item(
     return () => {
       if (imageRef.current) {
         imageRef.current.src = "";
+        clearTimeout(hoverTimeout.current);
       }
     };
   }, [isIntersecting]);
@@ -149,14 +151,17 @@ function Item(
 
   const hoverTimeout = React.useRef<number>();
 
-  function onMouseEnter() {
+  function onMouseEnter(_e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    if (isMobile) return;
     hoverTimeout.current = setTimeout(() => {
       onLongHovering?.(true);
       setIsLongHovering(true);
-    }, 1000);
+    }, 800);
   }
 
-  function onMouseLeave() {
+  function onMouseLeave(_e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    if (isMobile) return;
+
     clearTimeout(hoverTimeout.current);
     onLongHovering?.(false);
     setIsLongHovering(false);
@@ -166,63 +171,82 @@ function Item(
     <div
       ref={ref}
       className={cn(
-        "w-full pt-[130%] relative",
+        "w-full h-[300px] relative",
         !isIntersecting && "invisible",
-        isLongHovering && "z-50",
+        isLongHovering && "z-10",
       )}
     >
       {isIntersecting && (
-        <Card
-          onMouseEnter={onMouseEnter}
-          onMouseLeave={onMouseLeave}
-          className={cn(
-            "absolute w-full h-full top-1/2 overflow-hidden left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer active:scale-[99%] duration-200 will-change-transform dark:bg-border rounded-sm transition-all ease-in-out",
-            isLongHovering &&
-              "w-[528px] h-[528px] !bg-transparent !border-none !shadow-none duration-500",
-            isLongHoveringTriggered && !isLongHovering &&
-              "opacity-10 grayscale duration-500",
-          )}
+        <a
+          tabIndex={0}
+          href={`/budz/${metadata.id}`}
+          className="group"
         >
           <div
-            className={cn(
-              "relative w-full h-full transition-opacity duration-300 ease-in-out",
-              isLoadingImage ? "opacity-0" : "opacity-100",
-            )}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+            className="absolute w-full h-full"
           >
-            <div className="absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4">
-              <img
-                draggable={false}
-                className={cn(
-                  "-mt-[94px] min-w-[528px]",
-                  isLongHovering && "visible",
-                )}
-                ref={imageRef}
-              />
-            </div>
-
-            {isLongHovering && (
-              <div className="absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4">
-                <div className="mt-[460px] flex justify-center items-center flex-col">
-                  <div className="font-bold text-4xl">{metadata.type}</div>
-                  <div className="font-semibold text-xl mt-3">
-                    # {metadata.id}
-                  </div>
+            {isLongHovering &&
+              (
+                <div className="absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 w-[528px] h-[528px]">
+                  <PartialCircle
+                    className="absolute animate-in spin-in-90 fade-in-0 duration-1000 w-full h-full"
+                    radius={235}
+                    offsetDegree={-90}
+                  />
+                  <PartialCircle
+                    className="absolute animate-in spin-in-[-90deg] fade-in-0 duration-1000 w-full h-full"
+                    radius={235}
+                    offsetDegree={90}
+                  />
                 </div>
-              </div>
-            )}
-
-            <div className="absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4">
+              )}
+            <div
+              className={cn(
+                "group-focus-visible:ring-1 gropu-focus-visible:ring-ring absolute w-full h-full top-1/2 bg-transparent overflow-hidden left-1/2 -translate-x-1/2 -translate-y-1/2  will-change-transform rounded transition-all ease-in-out",
+                isLongHovering &&
+                  "w-[528px] h-[528px] duration-700",
+                isLongHoveringTriggered && !isLongHovering &&
+                  "opacity-10 grayscale duration-500",
+                !isLongHovering &&
+                  "group-active:scale-[99%] group-active:duration-100",
+              )}
+            >
               <div
                 className={cn(
-                  "font-extrabold mt-[330px] w-20 h-14 rounded-3xl border-4 border-card dark:border-inherit bg-card dark:bg-border flex justify-center items-center",
-                  isLongHovering && "invisible",
+                  "relative w-full h-full transition-opacity duration-300 ease-in-out",
+                  isLoadingImage ? "opacity-0" : "opacity-100",
                 )}
               >
-                {metadata.id}
+                <div className="absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4">
+                  <img
+                    draggable={false}
+                    className={cn(
+                      "min-w-[536px] contrast-[95%]",
+                      isLongHovering &&
+                        "visible group-active:scale-[99%] group-active:duration-100",
+                    )}
+                    ref={imageRef}
+                  />
+                </div>
               </div>
             </div>
+            {isLongHovering &&
+              (
+                <div className="absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4">
+                  <div className="mt-[580px] flex justify-center items-center flex-col">
+                    <div className="font-bold text-4xl animate-out fade-out-100 opacity-0 delay-300 duration-300 fill-mode-forwards">
+                      {metadata.type}
+                    </div>
+                    <div className="font-semibold text-xl mt-2 animate-out fade-out-100 opacity-0 delay-500 duration-300 fill-mode-forwards">
+                      #{metadata.id}
+                    </div>
+                  </div>
+                </div>
+              )}
           </div>
-        </Card>
+        </a>
       )}
     </div>
   );

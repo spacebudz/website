@@ -1,26 +1,21 @@
 import { Head } from "$fresh/runtime.ts";
+import { Button } from "@/components/ui/button/mod.tsx";
+import { ChevronLeftIcon } from "@radix-ui/react-icons";
 
 export default function Error404() {
   return (
     <>
       <Head>
-        <title>404 - Page not found</title>
+        <title>404 - inhabitable zone</title>
       </Head>
-      <div className="px-4 py-8 mx-auto bg-[#86efac]">
-        <div className="max-w-screen-md mx-auto flex flex-col items-center justify-center">
-          <img
-            className="my-6"
-            src="/logo.svg"
-            width="128"
-            height="128"
-            alt="the Fresh logo: a sliced lemon dripping with juice"
-          />
-          <h1 className="text-4xl font-bold">404 - Page not found</h1>
-          <p className="my-4">
-            The page you were looking for doesn't exist.
-          </p>
-          <a href="/" className="underline">Go back home</a>
-        </div>
+      <div className="flex flex-col w-full h-screen items-center justify-center">
+        <div className="text-3xl font-bold">404</div>
+        <a href="/">
+          <Button variant="link" className="mt-2">
+            <ChevronLeftIcon className="mr-1" />
+            Back to habitable zone
+          </Button>
+        </a>
       </div>
     </>
   );

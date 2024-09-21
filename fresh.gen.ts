@@ -5,20 +5,28 @@
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $api_joke from "./routes/api/joke.ts";
+import * as $budz_id_ from "./routes/budz/[id].tsx";
+import * as $budz_layout from "./routes/budz/_layout.tsx";
+import * as $budz_collection from "./routes/budz/collection.tsx";
+import * as $budz_index from "./routes/budz/index.tsx";
 import * as $charts from "./routes/charts.tsx";
 import * as $greet_name_ from "./routes/greet/[name].tsx";
 import * as $index from "./routes/index.tsx";
-import * as $items from "./routes/items.tsx";
 import * as $accordion_demo from "./islands/accordion_demo.tsx";
+import * as $bud from "./islands/bud.tsx";
 import * as $charts_1 from "./islands/charts.tsx";
+import * as $circle_animation_mod from "./islands/circle_animation/mod.tsx";
 import * as $combobox_mod from "./islands/combobox/mod.tsx";
+import * as $connection_line from "./islands/connection_line.tsx";
 import * as $counter from "./islands/counter.tsx";
 import * as $data_table_mod from "./islands/data_table/mod.tsx";
 import * as $date_picker from "./islands/date_picker.tsx";
 import * as $gifcard from "./islands/gifcard.tsx";
 import * as $hooks_use_is_intersecting from "./islands/hooks/use_is_intersecting.tsx";
+import * as $hooks_use_observe_dimension from "./islands/hooks/use_observe_dimension.tsx";
 import * as $hooks_use_toast from "./islands/hooks/use_toast.tsx";
 import * as $infinite_grid from "./islands/infinite_grid.tsx";
+import * as $landing from "./islands/landing.tsx";
 import * as $providers_theme_provider from "./islands/providers/theme_provider.tsx";
 import * as $toast_demo from "./islands/toast_demo.tsx";
 import * as $toggle_dark_mode from "./islands/toggle_dark_mode.tsx";
@@ -65,22 +73,30 @@ const manifest = {
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
     "./routes/api/joke.ts": $api_joke,
+    "./routes/budz/[id].tsx": $budz_id_,
+    "./routes/budz/_layout.tsx": $budz_layout,
+    "./routes/budz/collection.tsx": $budz_collection,
+    "./routes/budz/index.tsx": $budz_index,
     "./routes/charts.tsx": $charts,
     "./routes/greet/[name].tsx": $greet_name_,
     "./routes/index.tsx": $index,
-    "./routes/items.tsx": $items,
   },
   islands: {
     "./islands/accordion_demo.tsx": $accordion_demo,
+    "./islands/bud.tsx": $bud,
     "./islands/charts.tsx": $charts_1,
+    "./islands/circle_animation/mod.tsx": $circle_animation_mod,
     "./islands/combobox/mod.tsx": $combobox_mod,
+    "./islands/connection_line.tsx": $connection_line,
     "./islands/counter.tsx": $counter,
     "./islands/data_table/mod.tsx": $data_table_mod,
     "./islands/date_picker.tsx": $date_picker,
     "./islands/gifcard.tsx": $gifcard,
     "./islands/hooks/use_is_intersecting.tsx": $hooks_use_is_intersecting,
+    "./islands/hooks/use_observe_dimension.tsx": $hooks_use_observe_dimension,
     "./islands/hooks/use_toast.tsx": $hooks_use_toast,
     "./islands/infinite_grid.tsx": $infinite_grid,
+    "./islands/landing.tsx": $landing,
     "./islands/providers/theme_provider.tsx": $providers_theme_provider,
     "./islands/toast_demo.tsx": $toast_demo,
     "./islands/toggle_dark_mode.tsx": $toggle_dark_mode,
