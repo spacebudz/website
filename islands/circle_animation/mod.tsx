@@ -5,22 +5,24 @@ import * as React from "react";
 import { cn } from "@/lib/utils.ts";
 import { useObserveElementDimension } from "@/islands/hooks/use_observe_dimension.tsx";
 
-export interface PartialCircleProps extends React.SVGProps<SVGSVGElement> {
+export interface PartialCircleProps
+    extends React.HTMLAttributes<HTMLDivElement> {
     partial?: number;
     offsetDegree?: number;
+    radius?: number;
 }
 
-const PartialCircle = React.forwardRef<SVGSVGElement, PartialCircleProps>(
+const PartialCircle = React.forwardRef<HTMLDivElement, PartialCircleProps>(
     (
         { className, partial = 0.2, offsetDegree = 0, ...props },
         ref,
     ) => {
         const { ref: internalRef, dimension: { width } } =
             useObserveElementDimension<
-                SVGSVGElement
+                HTMLDivElement
             >();
         const center = Math.floor(width / 2);
-        const radius = parseInt(props.radius as string) || center;
+        const radius = props.radius || center;
         const circumference = 2 * Math.PI * radius;
         const visiblePart = partial * circumference;
         const hiddenPart = (1 - partial) * circumference;
@@ -30,24 +32,28 @@ const PartialCircle = React.forwardRef<SVGSVGElement, PartialCircleProps>(
         React.useImperativeHandle(ref, () => internalRef.current!);
 
         return (
-            <svg
+            <div
                 ref={internalRef}
+                {...props}
                 className={cn(
                     "stroke-primary stroke-1 fill-none",
                     className,
                 )}
-                viewBox={`0 0 ${width} ${width}`}
-                {...props}
             >
-                <circle
-                    className="fill-none"
-                    cx={center}
-                    cy={center}
-                    r={radius}
-                    strokeDasharray={`${visiblePart}, ${hiddenPart}`}
-                    strokeDashoffset={dashOffset}
-                />
-            </svg>
+                <svg
+                    className="w-full h-full"
+                    viewBox={`0 0 ${width} ${width}`}
+                >
+                    <circle
+                        className="fill-none"
+                        cx={center}
+                        cy={center}
+                        r={radius}
+                        strokeDasharray={`${visiblePart}, ${hiddenPart}`}
+                        strokeDashoffset={dashOffset}
+                    />
+                </svg>
+            </div>
         );
     },
 );
@@ -55,22 +61,24 @@ const PartialCircle = React.forwardRef<SVGSVGElement, PartialCircleProps>(
 PartialCircle.displayName = "PartialCircle";
 export { PartialCircle };
 
-export interface DashedCircleProps extends React.SVGProps<SVGSVGElement> {
+export interface DashedCircleProps
+    extends React.HTMLAttributes<HTMLDivElement> {
     dashes?: number;
     dashLength?: number;
+    radius?: number;
 }
 
-const DashedCircle = React.forwardRef<SVGSVGElement, DashedCircleProps>(
+const DashedCircle = React.forwardRef<HTMLDivElement, DashedCircleProps>(
     (
         { className, dashes = 100, dashLength = 10, ...props },
         ref,
     ) => {
         const { ref: internalRef, dimension: { width } } =
             useObserveElementDimension<
-                SVGSVGElement
+                HTMLDivElement
             >();
         const center = Math.floor(width / 2);
-        const radius = parseInt(props.radius as string) || center;
+        const radius = props.radius || center;
 
         React.useImperativeHandle(ref, () => internalRef.current!);
 
@@ -102,17 +110,21 @@ const DashedCircle = React.forwardRef<SVGSVGElement, DashedCircleProps>(
         }
 
         return (
-            <svg
+            <div
                 ref={internalRef}
                 className={cn(
                     "stroke-primary stroke-1 fill-none",
                     className,
                 )}
-                viewBox={`0 0 ${width} ${width}`}
                 {...props}
             >
-                {renderDashes()}
-            </svg>
+                <svg
+                    className="w-full h-full"
+                    viewBox={`0 0 ${width} ${width}`}
+                >
+                    {renderDashes()}
+                </svg>
+            </div>
         );
     },
 );

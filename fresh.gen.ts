@@ -17,7 +17,6 @@ import * as $bud from "./islands/bud.tsx";
 import * as $charts_1 from "./islands/charts.tsx";
 import * as $circle_animation_mod from "./islands/circle_animation/mod.tsx";
 import * as $combobox_mod from "./islands/combobox/mod.tsx";
-import * as $connection_line from "./islands/connection_line.tsx";
 import * as $counter from "./islands/counter.tsx";
 import * as $data_table_mod from "./islands/data_table/mod.tsx";
 import * as $date_picker from "./islands/date_picker.tsx";
@@ -87,7 +86,6 @@ const manifest = {
     "./islands/charts.tsx": $charts_1,
     "./islands/circle_animation/mod.tsx": $circle_animation_mod,
     "./islands/combobox/mod.tsx": $combobox_mod,
-    "./islands/connection_line.tsx": $connection_line,
     "./islands/counter.tsx": $counter,
     "./islands/data_table/mod.tsx": $data_table_mod,
     "./islands/date_picker.tsx": $date_picker,

@@ -1,8 +1,6 @@
 import * as React from "react";
 
-export function useObserveElementDimension<
-    T extends HTMLElement | SVGSVGElement,
->() {
+export function useObserveElementDimension<T extends HTMLElement>() {
     const [dimension, setDimension] = React.useState({ width: 0, height: 0 });
     const ref = React.useRef<T>(null);
 
