@@ -298,11 +298,13 @@ export function InfiniteGrid(
   { data }: { data: Signal<FilterResult> },
 ) {
   React.useMemo(() => {
-    const sessionData: FilterResult | false = JSON.parse(
-      sessionStorage.getItem("data") || "false",
-    );
-    if (sessionData && sessionData.query === data.value.query) {
-      data.value = sessionData;
+    if (IS_BROWSER) {
+      const sessionData: FilterResult | false = JSON.parse(
+        sessionStorage.getItem("data") || "false",
+      );
+      if (sessionData && sessionData.query === data.value.query) {
+        data.value = sessionData;
+      }
     }
   }, []);
 
