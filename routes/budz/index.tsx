@@ -1,10 +1,18 @@
 import { Landing } from "@/islands/landing.tsx";
-import { RouteConfig } from "$fresh/server.ts";
-
-export const config: RouteConfig = {
-    skipInheritedLayouts: true,
-};
+import { Head } from "$fresh/runtime.ts";
 
 export default function LandingPage() {
-    return <Landing />;
+    return (
+        <>
+            <Head>
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html:
+                            `window.isForcingDark=true;document.documentElement.classList.remove("light");document.documentElement.classList.add("dark");`,
+                    }}
+                />
+            </Head>
+            <Landing />
+        </>
+    );
 }

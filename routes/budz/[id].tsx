@@ -4,16 +4,7 @@ import metadata from "https://raw.githubusercontent.com/spacebudz/wormhole/refs/
 };
 import { Bud } from "@/islands/bud.tsx";
 import { fromText, toLabel } from "https://deno.land/x/lucid@0.10.10/mod.ts";
-
-type MetadataCollection = Record<string, Metadata>;
-
-export type Metadata = {
-    name: string;
-    traits: string[];
-    type: string;
-    image: string;
-    sha256: string;
-};
+import { MetadataCollection } from "@/lib/filter_collection.ts";
 
 function idToBud(id: number): string {
     return toLabel(222) + fromText(`Bud${id}`);

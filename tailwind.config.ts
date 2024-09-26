@@ -16,11 +16,6 @@ export default {
       },
     },
     extend: {
-      // custom
-      backgroundImage: {
-        "wardrobe":
-          "linear-gradient(hsl(var(--background)), hsl(var(--background) / 0.82)), url(/wardrobe.jpeg)",
-      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

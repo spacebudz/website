@@ -20,7 +20,7 @@ import {
 import { cn } from "@/lib/utils.ts";
 import { Badge } from "@/components/ui/badge/mod.tsx";
 import { useObserveElementDimension } from "@/islands/hooks/use_observe_dimension.tsx";
-import type { Metadata } from "@/routes/budz/[id].tsx";
+import type { Metadata } from "@/lib/filter_collection.ts";
 
 export type BudProps = {
     id: number;
@@ -52,7 +52,7 @@ export function Bud({ id, metadata, asset }: BudProps) {
     return (
         <div className="w-full flex flex-col items-center">
             <div className="flex items-center justify-center h-[10vh] w-full pb-6 pt-10 lg:py-0">
-                <Button asChild variant="ghost">
+                <Button asChild variant="outline">
                     <a
                         className="flex justify-center items-center space-x-2"
                         href="/budz/collection"
@@ -66,8 +66,8 @@ export function Bud({ id, metadata, asset }: BudProps) {
                             }
                         }}
                     >
-                        <ChevronLeftIcon className="w-5 h-5" />
-                        <div className="text-lg">Bud #{id}</div>
+                        <ChevronLeftIcon className="w-4 h-4" />
+                        <div>Bud #{id}</div>
                     </a>
                 </Button>
             </div>
@@ -100,7 +100,7 @@ export function Bud({ id, metadata, asset }: BudProps) {
                                 <a href="#">{metadata.type}</a>
                             </div>
                             <div className="flex w-full mt-4 space-x-2">
-                                <Card className="w-full max-w-[300px] h-[100px] border overflow-hidden relative border-none">
+                                <Card className="w-full max-w-[300px] h-[100px] overflow-hidden relative border-none">
                                     <img
                                         draggable={false}
                                         className={cn(

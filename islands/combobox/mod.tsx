@@ -1,11 +1,9 @@
 "use client";
 
-// This is a combobox example. This file expects customizations.
-
 import * as React from "react";
-import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
+import { CaretSortIcon, CheckIcon, MinusIcon } from "@radix-ui/react-icons";
 
-import { cn } from "@/lib/utils.ts";
+import { cn, isMobile } from "@/lib/utils.ts";
 import { Button } from "@/components/ui/button/mod.tsx";
 import {
     Command,
@@ -20,33 +18,40 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/islands/ui/popover/mod.tsx";
+import { Label } from "@/islands/ui/label/mod.tsx";
+import { Switch } from "@/islands/ui/switch/mod.tsx";
 
-const frameworks = [
-    {
-        value: "next.js",
-        label: "Next.js",
+export function Combobox(
+    { category, data, value, onChange, isGadgetsUnion, setIsGadgetsUnion }: {
+        category: "species" | "gadgets";
+        data: string[];
+        value: string[];
+        onChange: (value: string[]) => void;
+        isGadgetsUnion?: boolean;
+        setIsGadgetsUnion?: (value: React.SetStateAction<boolean>) => void;
     },
-    {
-        value: "sveltekit",
-        label: "SvelteKit",
-    },
-    {
-        value: "nuxt.js",
-        label: "Nuxt.js",
-    },
-    {
-        value: "remix",
-        label: "Remix",
-    },
-    {
-        value: "astro",
-        label: "Astro",
-    },
-];
-
-export function Combobox() {
+) {
     const [open, setOpen] = React.useState(false);
-    const [value, setValue] = React.useState("");
+    const focusRef = React.useRef<HTMLInputElement>(null);
+
+    React.useEffect(() => {
+        let distance = 0;
+        let timeout: number;
+        function onScroll(_e: Event) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                distance = 0;
+            }, 200);
+            distance++;
+            if (distance > 4) {
+                setOpen(false);
+            }
+        }
+        globalThis.addEventListener("scroll", onScroll);
+        return () => {
+            globalThis.removeEventListener("scroll", onScroll);
+        };
+    }, []);
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
@@ -55,47 +60,93 @@ export function Combobox() {
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className="w-[200px] justify-between"
+                    className="w-full justify-between"
+                    style={{ touchAction: "manipulation" }}
                 >
-                    {value
-                        ? frameworks.find((framework) =>
-                            framework.value === value
-                        )?.label
-                        : "Select framework..."}
+                    {value.length || "None"}{" "}
+                    applied{category === "gadgets" && value.length > 0 &&
+                        ` (${isGadgetsUnion ? "∪" : "∩"})`}
                     <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-[200px] p-0">
+            <PopoverContent
+                className="w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height] p-0"
+                onOpenAutoFocus={(e) => {
+                    e.preventDefault();
+                    if (focusRef.current && !isMobile) {
+                        focusRef.current.focus();
+                    }
+                }}
+            >
+                {category === "gadgets" &&
+                    (
+                        <div className="flex justify-center items-center space-x-2 mt-4">
+                            <Label className="text-lg">∩</Label>
+                            <Switch
+                                checked={isGadgetsUnion}
+                                onCheckedChange={setIsGadgetsUnion}
+                                className="data-[state=checked]:bg-input"
+                                style={{ touchAction: "manipulation" }}
+                            />
+                            <Label className="text-lg">∪</Label>
+                        </div>
+                    )}
                 <Command>
                     <CommandInput
-                        placeholder="Search framework..."
+                        ref={focusRef}
+                        placeholder={`Search ${category}...`}
                         className="h-9"
                     />
                     <CommandList>
-                        <CommandEmpty>No framework found.</CommandEmpty>
+                        <CommandEmpty>No {category} found.</CommandEmpty>
                         <CommandGroup>
-                            {frameworks.map((framework) => (
+                            {data.map((d, index) => (
                                 <CommandItem
-                                    key={framework.value}
-                                    value={framework.value}
+                                    style={{ touchAction: "manipulation" }}
+                                    key={index}
+                                    value={d}
                                     onSelect={(currentValue) => {
-                                        setValue(
-                                            currentValue === value
-                                                ? ""
-                                                : currentValue,
-                                        );
-                                        setOpen(false);
+                                        if (
+                                            value.includes(currentValue) &&
+                                            category === "gadgets"
+                                        ) {
+                                            onChange(value.map((v) =>
+                                                v === currentValue
+                                                    ? "!" + currentValue
+                                                    : v
+                                            ));
+                                        } else if (
+                                            value.includes(
+                                                "!" + currentValue,
+                                            ) || value.includes(currentValue)
+                                        ) {
+                                            onChange(
+                                                value.filter((v) =>
+                                                    v !== "!" + currentValue &&
+                                                    v !== currentValue
+                                                ),
+                                            );
+                                        } else {onChange([
+                                                ...value,
+                                                currentValue,
+                                            ]);}
                                     }}
                                 >
-                                    {framework.label}
-                                    <CheckIcon
-                                        className={cn(
-                                            "ml-auto h-4 w-4",
-                                            value === framework.value
-                                                ? "opacity-100"
-                                                : "opacity-0",
-                                        )}
-                                    />
+                                    {d}
+                                    {value.includes(d) && (
+                                        <CheckIcon
+                                            className={cn(
+                                                "ml-auto h-3 w-3",
+                                            )}
+                                        />
+                                    )}
+                                    {value.includes("!" + d) && (
+                                        <MinusIcon
+                                            className={cn(
+                                                "ml-auto h-3 w-3",
+                                            )}
+                                        />
+                                    )}
                                 </CommandItem>
                             ))}
                         </CommandGroup>

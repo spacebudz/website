@@ -26,10 +26,14 @@ const ThemeProviderContext = React.createContext<ThemeProviderState>(
     initialState,
 );
 
+const isForcingDark = (globalThis as typeof globalThis & {
+    isForcingDark?: boolean;
+}).isForcingDark;
+
 export function ThemeProvider({
     children,
     defaultTheme = "system",
-    storageKey = "vite-ui-theme",
+    storageKey = "theme",
     ...props
 }: ThemeProviderProps) {
     const [theme, setTheme] = React.useState<Theme>(
@@ -37,32 +41,54 @@ export function ThemeProvider({
             (IS_BROWSER && localStorage.getItem(storageKey) as Theme) ||
             defaultTheme,
     );
+    const themeRef = React.useRef<Theme>();
 
-    React.useEffect(() => {
+    function applyTheme(theme: Theme) {
+        if (IS_BROWSER) localStorage.setItem(storageKey, theme);
+        if (isForcingDark) return;
         const root = globalThis.document.documentElement;
-
         root.classList.remove("light", "dark");
-
-        if (theme === "system") {
-            const systemTheme =
-                globalThis.matchMedia("(prefers-color-scheme: dark)")
+        root.classList.add(
+            theme === "system"
+                ? globalThis.matchMedia("(prefers-color-scheme: dark)")
                         .matches
                     ? "dark"
-                    : "light";
+                    : "light"
+                : theme,
+        );
+        setTheme(theme);
+    }
 
-            root.classList.add(systemTheme);
-            return;
-        }
-
-        root.classList.add(theme);
+    React.useEffect(() => {
+        themeRef.current = theme;
     }, [theme]);
 
+    React.useEffect(() => {
+        function onApplyTheme(e: StorageEvent | MediaQueryListEvent) {
+            if ("key" in e && "newValue" in e && e.key === "theme") {
+                return applyTheme(e.newValue as Theme);
+            }
+            if ("matches" in e && themeRef.current === "system") {
+                return applyTheme("system");
+            }
+        }
+        globalThis.addEventListener("storage", onApplyTheme);
+        globalThis.matchMedia("(prefers-color-scheme: dark)")
+            .addEventListener(
+                "change",
+                onApplyTheme,
+            );
+
+        return () => {
+            globalThis.removeEventListener("storage", onApplyTheme);
+            globalThis.matchMedia("(prefers-color-scheme: dark)")
+                .removeEventListener("change", onApplyTheme);
+        };
+    }, []);
+
     const value = {
-        theme,
-        setTheme: (theme: Theme) => {
-            if (IS_BROWSER) localStorage.setItem(storageKey, theme);
-            setTheme(theme);
-        },
+        theme: isForcingDark ? "dark" : theme,
+        setTheme: (theme: Theme) => applyTheme(theme),
     };
 
     return (

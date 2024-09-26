@@ -4,18 +4,18 @@
 
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
-import * as $api_joke from "./routes/api/joke.ts";
+import * as $api_filter_collection from "./routes/api/filter_collection.ts";
 import * as $budz_id_ from "./routes/budz/[id].tsx";
 import * as $budz_layout from "./routes/budz/_layout.tsx";
 import * as $budz_collection from "./routes/budz/collection.tsx";
 import * as $budz_index from "./routes/budz/index.tsx";
 import * as $charts from "./routes/charts.tsx";
-import * as $greet_name_ from "./routes/greet/[name].tsx";
 import * as $index from "./routes/index.tsx";
 import * as $accordion_demo from "./islands/accordion_demo.tsx";
 import * as $bud from "./islands/bud.tsx";
 import * as $charts_1 from "./islands/charts.tsx";
 import * as $circle_animation_mod from "./islands/circle_animation/mod.tsx";
+import * as $collection from "./islands/collection.tsx";
 import * as $combobox_mod from "./islands/combobox/mod.tsx";
 import * as $counter from "./islands/counter.tsx";
 import * as $data_table_mod from "./islands/data_table/mod.tsx";
@@ -24,7 +24,6 @@ import * as $gifcard from "./islands/gifcard.tsx";
 import * as $hooks_use_is_intersecting from "./islands/hooks/use_is_intersecting.tsx";
 import * as $hooks_use_observe_dimension from "./islands/hooks/use_observe_dimension.tsx";
 import * as $hooks_use_toast from "./islands/hooks/use_toast.tsx";
-import * as $infinite_grid from "./islands/infinite_grid.tsx";
 import * as $landing from "./islands/landing.tsx";
 import * as $providers_theme_provider from "./islands/providers/theme_provider.tsx";
 import * as $toast_demo from "./islands/toast_demo.tsx";
@@ -71,13 +70,12 @@ const manifest = {
   routes: {
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
-    "./routes/api/joke.ts": $api_joke,
+    "./routes/api/filter_collection.ts": $api_filter_collection,
     "./routes/budz/[id].tsx": $budz_id_,
     "./routes/budz/_layout.tsx": $budz_layout,
     "./routes/budz/collection.tsx": $budz_collection,
     "./routes/budz/index.tsx": $budz_index,
     "./routes/charts.tsx": $charts,
-    "./routes/greet/[name].tsx": $greet_name_,
     "./routes/index.tsx": $index,
   },
   islands: {
@@ -85,6 +83,7 @@ const manifest = {
     "./islands/bud.tsx": $bud,
     "./islands/charts.tsx": $charts_1,
     "./islands/circle_animation/mod.tsx": $circle_animation_mod,
+    "./islands/collection.tsx": $collection,
     "./islands/combobox/mod.tsx": $combobox_mod,
     "./islands/counter.tsx": $counter,
     "./islands/data_table/mod.tsx": $data_table_mod,
@@ -93,7 +92,6 @@ const manifest = {
     "./islands/hooks/use_is_intersecting.tsx": $hooks_use_is_intersecting,
     "./islands/hooks/use_observe_dimension.tsx": $hooks_use_observe_dimension,
     "./islands/hooks/use_toast.tsx": $hooks_use_toast,
-    "./islands/infinite_grid.tsx": $infinite_grid,
     "./islands/landing.tsx": $landing,
     "./islands/providers/theme_provider.tsx": $providers_theme_provider,
     "./islands/toast_demo.tsx": $toast_demo,
