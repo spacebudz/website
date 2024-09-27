@@ -423,7 +423,13 @@ function GadgetsContainer(
                     className="absolute bg-background max-w-24 text-center"
                     style={{ left: position.x, top: position.y }}
                 >
-                    <a href="#">{gadget}</a>
+                    <a
+                        href={`/budz/collection?${
+                            new URLSearchParams(`gadgets=${gadget}`).toString()
+                        }`}
+                    >
+                        {gadget}
+                    </a>
                 </Badge>
             ))}
         </div>
