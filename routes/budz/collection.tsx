@@ -59,9 +59,7 @@ export default function CollectionPage(props: PageProps) {
                     </Card>
                     <ScrollPanel data={data} />
                     <div className="w-full mt-8">
-                        <InfiniteGrid
-                            data={data}
-                        />
+                        <InfiniteGrid data={data} />
                     </div>
                 </div>
             </div>

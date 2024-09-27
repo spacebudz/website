@@ -320,6 +320,7 @@ export function InfiniteGrid(
     });
 
     async function onAppliedFilter(e: Event) {
+      data.value = { ...data.value, batch: [] };
       // deno-lint-ignore ban-ts-comment
       //@ts-ignore
       const url = e.detail;
@@ -439,7 +440,7 @@ function Item(
   const ref = React.useRef<HTMLDivElement>(null);
   const isIntersecting = useIsIntersecting(
     ref,
-    { rootMargin: "700px" },
+    { rootMargin: "1000px" },
     onIntersection,
   );
 
@@ -462,7 +463,7 @@ function Item(
         clearTimeout(hoverTimeout.current);
       }
     };
-  }, [isIntersecting, metadata]);
+  }, [isIntersecting]);
 
   const [isLongHovering, setIsLongHovering] = React.useState<boolean>(false);
 
@@ -502,7 +503,10 @@ function Item(
           <div
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
-            className="absolute w-full h-full"
+            className={cn(
+              "absolute w-full h-full",
+              isLoadingImage && "border rounded-xl",
+            )}
           >
             {isLongHovering &&
               (
