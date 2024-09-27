@@ -57,12 +57,21 @@ export function Bud({ id, metadata, asset }: BudProps) {
                         className="flex justify-center items-center space-x-2"
                         href="/budz/collection"
                         onClick={(e) => {
-                            if (
-                                new URL("/budz/collection", globalThis.origin)
-                                    .href === document?.referrer
-                            ) {
-                                e.preventDefault();
-                                globalThis.history.back();
+                            if (document?.referrer) {
+                                const referrerUrl = new URL(document.referrer);
+                                if (
+                                    new URL(
+                                        "/budz/collection",
+                                        globalThis.origin,
+                                    ).href ===
+                                        new URL(
+                                            referrerUrl.pathname,
+                                            referrerUrl.origin,
+                                        ).href
+                                ) {
+                                    e.preventDefault();
+                                    globalThis.history.back();
+                                }
                             }
                         }}
                     >
