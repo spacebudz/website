@@ -56,6 +56,7 @@ import * as $ui_select_mod from "./islands/ui/select/mod.tsx";
 import * as $ui_separator_mod from "./islands/ui/separator/mod.tsx";
 import * as $ui_sheet_mod from "./islands/ui/sheet/mod.tsx";
 import * as $ui_slider_mod from "./islands/ui/slider/mod.tsx";
+import * as $ui_slider_slider_thumb from "./islands/ui/slider/slider_thumb.tsx";
 import * as $ui_sonner_mod from "./islands/ui/sonner/mod.tsx";
 import * as $ui_switch_mod from "./islands/ui/switch/mod.tsx";
 import * as $ui_tabs_mod from "./islands/ui/tabs/mod.tsx";
@@ -124,6 +125,7 @@ const manifest = {
     "./islands/ui/separator/mod.tsx": $ui_separator_mod,
     "./islands/ui/sheet/mod.tsx": $ui_sheet_mod,
     "./islands/ui/slider/mod.tsx": $ui_slider_mod,
+    "./islands/ui/slider/slider_thumb.tsx": $ui_slider_slider_thumb,
     "./islands/ui/sonner/mod.tsx": $ui_sonner_mod,
     "./islands/ui/switch/mod.tsx": $ui_switch_mod,
     "./islands/ui/tabs/mod.tsx": $ui_tabs_mod,

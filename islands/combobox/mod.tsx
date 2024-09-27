@@ -20,15 +20,29 @@ import {
 } from "@/islands/ui/popover/mod.tsx";
 import { Label } from "@/islands/ui/label/mod.tsx";
 import { Switch } from "@/islands/ui/switch/mod.tsx";
+import { Slider } from "@/islands/ui/slider/mod.tsx";
 
 export function Combobox(
-    { category, data, value, onChange, isGadgetsUnion, setIsGadgetsUnion }: {
+    {
+        category,
+        data,
+        value,
+        onChange,
+        isGadgetsUnion,
+        setIsGadgetsUnion,
+        gadgetsRange,
+        setGadgetsRange,
+    }: {
         category: "species" | "gadgets";
         data: string[];
         value: string[];
         onChange: (value: string[]) => void;
         isGadgetsUnion?: boolean;
         setIsGadgetsUnion?: (value: React.SetStateAction<boolean>) => void;
+        gadgetsRange?: number[];
+        setGadgetsRange?: (
+            value: React.SetStateAction<number[]>,
+        ) => void;
     },
 ) {
     const [open, setOpen] = React.useState(false);
@@ -63,9 +77,25 @@ export function Combobox(
                     className="w-full justify-between"
                     style={{ touchAction: "manipulation" }}
                 >
-                    {value.length || "None"}{" "}
-                    applied{category === "gadgets" && value.length > 0 &&
-                        ` (${isGadgetsUnion ? "∪" : "∩"})`}
+                    {category === "species" && value.length <= 0 &&
+                        "None applied"}
+                    {category === "species" && value.length > 0 &&
+                        `${value.length} applied`}
+                    {category === "gadgets" &&
+                        gadgetsRange?.toString() === [0, 12].toString() &&
+                        value.length <= 0 &&
+                        "None applied"}
+                    {category === "gadgets" && value.length > 0 &&
+                        `${value.length} (${isGadgetsUnion ? "∪" : "∩"})${
+                            gadgetsRange?.toString() !== [0, 12].toString()
+                                ? ""
+                                : " applied"
+                        }`}
+                    {category === "gadgets" && gadgetsRange &&
+                        gadgetsRange?.toString() !== [0, 12].toString() &&
+                        `${value.length > 0 ? ", " : ""}[ ${gadgetsRange[0]}; ${
+                            gadgetsRange[1]
+                        } ]`}
                     <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
             </PopoverTrigger>
@@ -80,16 +110,27 @@ export function Combobox(
             >
                 {category === "gadgets" &&
                     (
-                        <div className="flex justify-center items-center space-x-2 mt-4">
-                            <Label className="text-lg">∩</Label>
-                            <Switch
-                                checked={isGadgetsUnion}
-                                onCheckedChange={setIsGadgetsUnion}
-                                className="data-[state=checked]:bg-input"
-                                style={{ touchAction: "manipulation" }}
+                        <>
+                            <Slider
+                                className="w-full px-4 mt-4 -mb-2 h-6"
+                                defaultValue={gadgetsRange}
+                                minStepsBetweenThumbs={1}
+                                max={12}
+                                min={0}
+                                step={1}
+                                onValueChange={setGadgetsRange}
                             />
-                            <Label className="text-lg">∪</Label>
-                        </div>
+                            <div className="flex justify-center items-center space-x-2 mt-4">
+                                <Label className="text-lg">∩</Label>
+                                <Switch
+                                    checked={isGadgetsUnion}
+                                    onCheckedChange={setIsGadgetsUnion}
+                                    className="data-[state=checked]:bg-input"
+                                    style={{ touchAction: "manipulation" }}
+                                />
+                                <Label className="text-lg">∪</Label>
+                            </div>
+                        </>
                     )}
                 <Command>
                     <CommandInput
@@ -133,20 +174,30 @@ export function Combobox(
                                     }}
                                 >
                                     {d}
-                                    {value.includes(d) && (
-                                        <CheckIcon
-                                            className={cn(
-                                                "ml-auto h-3 w-3",
-                                            )}
-                                        />
-                                    )}
-                                    {value.includes("!" + d) && (
-                                        <MinusIcon
-                                            className={cn(
-                                                "ml-auto h-3 w-3",
-                                            )}
-                                        />
-                                    )}
+                                    <div
+                                        className={cn(
+                                            "ml-auto h-4 w-4 flex items-center justify-center border rounded",
+                                            value.includes(d) &&
+                                                "bg-primary text-secondary",
+                                            value.includes("!" + d) &&
+                                                "bg-destructive text-secondary",
+                                        )}
+                                    >
+                                        {value.includes(d) && (
+                                            <CheckIcon
+                                                className={cn(
+                                                    "h-full w-full",
+                                                )}
+                                            />
+                                        )}
+                                        {value.includes("!" + d) && (
+                                            <MinusIcon
+                                                className={cn(
+                                                    "h-full w-full",
+                                                )}
+                                            />
+                                        )}
+                                    </div>
                                 </CommandItem>
                             ))}
                         </CommandGroup>

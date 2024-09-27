@@ -39,7 +39,8 @@ export function filterCollection({
         .bySort()
         .byId()
         .bySpecies()
-        .byGadget()
+        .byGadgets()
+        .byGadgetsRange()
         .done();
 
     const start = page * batchSize;
@@ -93,8 +94,10 @@ class Filter {
         return this;
     }
 
-    byGadget(): Filter {
-        const isUnion = this.params.get("gadgets_union") === "true";
+    byGadgets(): Filter {
+        const isUnion: boolean | null = JSON.parse(
+            this.params.get("gadgets_union") || "null",
+        );
         const gadgets = this.params.getAll("gadgets");
         function check(gadget: string, gadgets: string[]): boolean {
             return gadget.startsWith("!")
@@ -106,6 +109,19 @@ class Filter {
                 isUnion
                     ? gadgets.some((g) => check(g, m.traits))
                     : gadgets.every((g) => check(g, m.traits))
+            );
+        }
+        return this;
+    }
+
+    byGadgetsRange(): Filter {
+        const gadgetsRange: number[] | null = JSON.parse(
+            this.params.get("gadgets_range") || "null",
+        );
+        if (gadgetsRange) {
+            this.metadata = this.metadata.filter((m) =>
+                m.traits.length >= gadgetsRange[0] &&
+                m.traits.length <= gadgetsRange[1]
             );
         }
         return this;

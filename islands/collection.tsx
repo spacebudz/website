@@ -109,13 +109,18 @@ export function ScrollPanel(
     value: url.searchParams?.get("id") || "",
   }));
   const [species, setSpecies] = React.useState<string[]>(
-    url.searchParams?.getAll("species") || [],
+    () => url.searchParams?.getAll("species") || [],
   );
   const [gadgets, setGadgets] = React.useState<string[]>(
-    url.searchParams?.getAll("gadgets") || [],
+    () => url.searchParams?.getAll("gadgets") || [],
   );
   const [isGadgetsUnion, setIsGadgetsUnion] = React.useState<boolean>(
-    Boolean(url.searchParams?.get("gadgets_union")),
+    () => JSON.parse(url.searchParams?.get("gadgets_union") || "false"),
+  );
+  const [gadgetsRange, setGadgetsRange] = React.useState<number[]>(() =>
+    JSON.parse(
+      url.searchParams?.get("gadgets_range") || JSON.stringify([0, 12]),
+    )
   );
 
   const urlSearchParams = React.useMemo(() => {
@@ -124,7 +129,10 @@ export function ScrollPanel(
       params.set("sort", "desc");
     }
     if (id.value) params.set("id", id.value);
-    if (isGadgetsUnion) params.set("gadgets_union", "true");
+    if (isGadgetsUnion) params.set("gadgets_union", JSON.stringify(true));
+    if (gadgetsRange.toString() !== [0, 12].toString()) {
+      params.set("gadgets_range", JSON.stringify(gadgetsRange));
+    }
     species.forEach((s) => {
       params.append("species", s);
     });
@@ -132,7 +140,7 @@ export function ScrollPanel(
       params.append("gadgets", g);
     });
     return params;
-  }, [isDescending, id, species, gadgets, isGadgetsUnion]);
+  }, [isDescending, id, species, gadgets, isGadgetsUnion, gadgetsRange]);
 
   const hasMatchingParams = typeof url.searchParams === "undefined" ||
     urlSearchParams.toString() === url.searchParams.toString();
@@ -198,9 +206,9 @@ export function ScrollPanel(
         isLongHoveringTriggered.value && isSticky && "opacity-0",
       )}
     >
-      <CardContent className="py-14 md:py-6 md:px-20 w-full h-[250px] md:h-[220px] grid grid-cols-2 md:grid-cols-3 justify-start items-center gap-6 md:gap-x-32 relative">
+      <CardContent className="py-14 lg:py-6 lg:px-20 w-full h-[250px] lg:h-[220px] grid grid-cols-2 lg:grid-cols-3 justify-start items-center gap-6 lg:gap-x-32 relative">
         <div className="flex items-center justify-center w-full h-full relative">
-          <div className="absolute -top-6 md:top-6 left-0 font-semibold text-lg mb-4">
+          <div className="absolute -top-6 lg:top-6 left-0 font-semibold text-lg mb-4">
             Species
           </div>
           <Combobox
@@ -211,7 +219,7 @@ export function ScrollPanel(
           />
         </div>
         <div className="flex items-center justify-center w-full h-full relative">
-          <div className="absolute -top-6 md:top-6 left-0 font-semibold text-lg mb-4">
+          <div className="absolute -top-6 lg:top-6 left-0 font-semibold text-lg mb-4">
             Gadgets
           </div>
           <Combobox
@@ -221,10 +229,12 @@ export function ScrollPanel(
             onChange={setGadgets}
             isGadgetsUnion={isGadgetsUnion}
             setIsGadgetsUnion={setIsGadgetsUnion}
+            gadgetsRange={gadgetsRange}
+            setGadgetsRange={setGadgetsRange}
           />
         </div>
-        <div className="flex items-center justify-center relative w-full h-full col-span-2 md:col-span-1">
-          <div className="absolute -top-6 md:top-6 left-0 font-semibold text-lg mb-4">
+        <div className="flex items-center justify-center relative w-full h-full col-span-2 lg:col-span-1">
+          <div className="absolute -top-6 lg:top-6 left-0 font-semibold text-lg mb-4">
             Tag
           </div>
           <Input
@@ -275,6 +285,7 @@ export function ScrollPanel(
           </div>
         </Button>
         <Button
+          disabled={url.searchParams?.size <= 0 && urlSearchParams?.size <= 0}
           className="absolute right-3 top-3"
           variant="ghost"
           size="icon"
@@ -284,6 +295,7 @@ export function ScrollPanel(
             setSpecies([]);
             setGadgets([]);
             setIsGadgetsUnion(false);
+            setGadgetsRange([0, 12]);
             applyFilter({ reset: true });
           }}
         >
@@ -485,13 +497,15 @@ function Item(
     setIsLongHovering(false);
   }
 
+  const isLongHoveringAndLoaded = isLongHovering && !isLoadingImage;
+
   return (
     <div
       ref={ref}
       className={cn(
         "w-full h-[300px] relative",
         !isIntersecting && "invisible",
-        isLongHovering && "z-10",
+        isLongHoveringAndLoaded && "z-10",
       )}
     >
       {isIntersecting && (
@@ -508,7 +522,7 @@ function Item(
               isLoadingImage && "border rounded-xl",
             )}
           >
-            {isLongHovering &&
+            {isLongHoveringAndLoaded &&
               (
                 <div className="absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 w-[528px] h-[528px]">
                   <PartialCircle
@@ -526,11 +540,11 @@ function Item(
             <div
               className={cn(
                 "group-focus-visible:ring-1 gropu-focus-visible:ring-ring absolute w-full h-full top-1/2 bg-transparent overflow-hidden left-1/2 -translate-x-1/2 -translate-y-1/2  will-change-transform rounded-xl transition-all ease-in-out",
-                isLongHovering &&
+                isLongHoveringAndLoaded &&
                   "w-[528px] h-[528px] duration-700",
                 isLongHoveringTriggered.value && !isLongHovering &&
                   "opacity-10 grayscale duration-500",
-                !isLongHovering &&
+                !isLongHoveringAndLoaded &&
                   "group-active:scale-[99%] group-active:duration-100",
               )}
             >
@@ -545,7 +559,7 @@ function Item(
                     draggable={false}
                     className={cn(
                       "min-w-[536px] contrast-[95%] group-hover:scale-[101%] transition-transform duration-300",
-                      isLongHovering &&
+                      isLongHoveringAndLoaded &&
                         "visible group-active:scale-[99%] group-active:duration-100 group-hover:scale-100",
                     )}
                     ref={imageRef}
@@ -553,7 +567,7 @@ function Item(
                 </div>
               </div>
             </div>
-            {isLongHovering &&
+            {isLongHoveringAndLoaded &&
               (
                 <div className="absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4">
                   <div className="mt-[580px] flex justify-center items-center flex-col">

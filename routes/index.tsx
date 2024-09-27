@@ -9,6 +9,7 @@ import { ToastDemo } from "@/islands/toast_demo.tsx";
 import { Button } from "@/components/ui/button/mod.tsx";
 import { DataTable } from "@/islands/data_table/mod.tsx";
 import { ModeToggle } from "@/islands/toggle_dark_mode.tsx";
+import { Slider } from "@/islands/ui/slider/mod.tsx";
 
 export default function Home() {
   const count = useSignal(4);
@@ -65,6 +66,16 @@ export default function Home() {
           <Button asChild>
             <a href="/charts">Go to charts</a>
           </Button>
+        </div>
+        <div className="mx-10 md:w-[400px] my-10 flex items-center justify-center flex-col">
+          <Slider
+            className="w-full"
+            defaultValue={[0, 12]}
+            minStepsBetweenThumbs={1}
+            max={12}
+            min={0}
+            step={1}
+          />
         </div>
       </div>
       <div className="m-6 flex items-center justify-center border-2 border-black">
