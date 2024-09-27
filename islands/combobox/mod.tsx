@@ -93,7 +93,7 @@ export function Combobox(
                         }`}
                     {category === "gadgets" && gadgetsRange &&
                         gadgetsRange?.toString() !== [0, 12].toString() &&
-                        `${value.length > 0 ? ", " : ""}[ ${gadgetsRange[0]}; ${
+                        `${value.length > 0 ? "; " : ""}[ ${gadgetsRange[0]}, ${
                             gadgetsRange[1]
                         } ]`}
                     <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
