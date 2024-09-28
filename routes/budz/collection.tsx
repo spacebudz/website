@@ -38,7 +38,7 @@ export default function CollectionPage(props: PageProps) {
                 <div className="flex justify-center items-center flex-col max-w-screen-xl w-full">
                     <Card className="w-full pt-4 bg-[linear-gradient(hsl(var(--background)),hsl(var(--background)/0.82)),url(/wardrobe.jpeg)] bg-cover bg-center border-t-0 border-r-0 border-l-0 rounded-t-none shadow-none">
                         <CardHeader>
-                            <CardDescription className="text-primary text-balance max-w-lg">
+                            <CardDescription className="text-primary text-balance max-w-lg font-mono">
                                 From species to gadgets, colors to emotions, the
                                 SpaceBudz collection features a wide range of
                                 unique explorers. Each one brings its own

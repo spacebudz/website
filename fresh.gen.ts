@@ -7,6 +7,7 @@ import * as $_app from "./routes/_app.tsx";
 import * as $api_filter_collection from "./routes/api/filter_collection.ts";
 import * as $budz_id_ from "./routes/budz/[id].tsx";
 import * as $budz_layout from "./routes/budz/_layout.tsx";
+import * as $budz_about from "./routes/budz/about.tsx";
 import * as $budz_collection from "./routes/budz/collection.tsx";
 import * as $budz_index from "./routes/budz/index.tsx";
 import * as $charts from "./routes/charts.tsx";
@@ -74,6 +75,7 @@ const manifest = {
     "./routes/api/filter_collection.ts": $api_filter_collection,
     "./routes/budz/[id].tsx": $budz_id_,
     "./routes/budz/_layout.tsx": $budz_layout,
+    "./routes/budz/about.tsx": $budz_about,
     "./routes/budz/collection.tsx": $budz_collection,
     "./routes/budz/index.tsx": $budz_index,
     "./routes/charts.tsx": $charts,

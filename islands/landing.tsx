@@ -68,7 +68,7 @@ function Section1() {
                         className="animate-out delay-700 duration-1000 opacity-0 fade-out-100 fill-mode-forwards w-full h-full"
                     />
                 </div>
-                <div className="-bottom-10 md:-bottom-2 animate-out delay-1000 duration-500 opacity-0 fade-out-100 fill-mode-forwards select-none absolute w-full text-center">
+                <div className="-bottom-10 md:-bottom-2 animate-out delay-1000 duration-500 opacity-0 fade-out-100 fill-mode-forwards select-none absolute w-full text-center font-mono">
                     Press to enter
                 </div>
             </div>

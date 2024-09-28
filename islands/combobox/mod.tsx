@@ -177,7 +177,7 @@ export function Combobox(
                                     {d}
                                     <div
                                         className={cn(
-                                            "ml-auto h-4 w-4 flex items-center justify-center border rounded",
+                                            "ml-auto h-4 w-4 flex items-center justify-center rounded",
                                             value.includes(d) &&
                                                 "bg-primary text-secondary",
                                             value.includes("!" + d) &&
@@ -187,14 +187,14 @@ export function Combobox(
                                         {value.includes(d) && (
                                             <CheckIcon
                                                 className={cn(
-                                                    "h-full w-full",
+                                                    "h-3 w-3",
                                                 )}
                                             />
                                         )}
                                         {value.includes("!" + d) && (
                                             <MinusIcon
                                                 className={cn(
-                                                    "h-full w-full",
+                                                    "h-3 w-3",
                                                 )}
                                             />
                                         )}
