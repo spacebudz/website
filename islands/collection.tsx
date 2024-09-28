@@ -96,7 +96,11 @@ export function ScrollPanel(
     rootMargin: "-1px 0px 0px 0px",
   });
   const isSticky = typeof isIntersecting !== "undefined" && !isIntersecting;
-  const [isShowing, setIsShowing] = React.useState<boolean>();
+  const [isShowing, setIsShowing] = React.useState<boolean>(true);
+  const isStickyRef = React.useRef(isSticky);
+  const isShowingRef = React.useRef(isShowing);
+
+  const [top, setTop] = React.useState<number>();
 
   const [url, setUrl] = React.useState(
     (IS_BROWSER && new URL(globalThis.location.href)) as URL,
@@ -163,7 +167,7 @@ export function ScrollPanel(
       }, 200);
 
       distance++;
-      if (distance > 4) {
+      if (distance > 4 && isStickyRef.current) {
         setTimeout(() => setIsShowing(false));
       }
     }
@@ -189,22 +193,73 @@ export function ScrollPanel(
     globalThis.scrollTo({ top: 0 });
   }
 
+  React.useEffect(() => {
+    isStickyRef.current = isSticky;
+    isShowingRef.current = isShowing;
+  }, [isSticky, isShowing]);
+
+  React.useEffect(() => {
+    let startY = 0;
+    let currentY = 0;
+
+    if (ref.current) {
+      const handleTouchStart = (event: TouchEvent) => {
+        const touch = event.touches[0];
+        startY = touch.clientY;
+      };
+
+      const handleTouchMove = (event: TouchEvent) => {
+        if (event.cancelable && isStickyRef.current) {
+          event.preventDefault();
+        }
+        if (isStickyRef.current && !isShowingRef.current) {
+          event.preventDefault();
+          const touch = event.touches[0];
+          currentY = touch.clientY;
+          const deltaY = currentY - startY;
+
+          if (deltaY > 0) {
+            setTop(Math.min(-128 + Math.floor(deltaY), -1));
+          }
+        }
+      };
+
+      const handleTouchEnd = () => {
+        setIsShowing(true);
+        setTop(undefined);
+      };
+
+      ref.current.addEventListener("touchstart", handleTouchStart);
+      ref.current.addEventListener("touchmove", handleTouchMove);
+      ref.current.addEventListener("touchend", handleTouchEnd);
+
+      // Cleanup event listeners on unmount
+      return () => {
+        if (ref.current) {
+          ref.current.removeEventListener("touchstart", handleTouchStart);
+          ref.current.removeEventListener("touchmove", handleTouchMove);
+          ref.current.removeEventListener("touchend", handleTouchEnd);
+        }
+      };
+    }
+  }, []);
+
   return (
     <Card
       onMouseEnter={() => setIsShowing(true)}
       onClick={() => setIsShowing(true)}
-      onTouchMove={() => {
-        //TODO
-      }}
       ref={ref}
       className={cn(
         "w-full h-full sticky -top-32 mt-2 shadow-none overflow-hidden z-20",
         isSticky &&
-          "rounded-t-none border border-t-0 shadow transition-all duration-300",
-        isSticky && isShowing && "top-0",
+          "rounded-t-none border border-t-0 shadow will-change-transform",
+        isSticky && !Number.isInteger(top) &&
+          "transition-all duration-300",
+        isSticky && isShowing && "-top-[1px]",
         isLongHoveringTriggered.value && "opacity-10 z-0",
         isLongHoveringTriggered.value && isSticky && "opacity-0",
       )}
+      style={Number.isInteger(top) ? { top: `${top}px` } : {}}
     >
       <CardContent className="py-14 lg:py-6 lg:px-20 w-full h-[250px] lg:h-[220px] grid grid-cols-2 lg:grid-cols-3 justify-start items-center gap-6 lg:gap-x-32 relative">
         <div className="flex items-center justify-center w-full h-full relative">

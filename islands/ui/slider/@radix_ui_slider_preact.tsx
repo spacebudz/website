@@ -1,3 +1,5 @@
+// deno-lint-ignore-file
+// @ts-nocheck
 // from https://raw.githubusercontent.com/radix-ui/primitives/main/packages/react/slider/src/Slider.tsx
 
 // @deno-types="npm:@types/react@18.3.1"
@@ -664,8 +666,6 @@ type SliderThumbImplElement = React.ElementRef<typeof Primitive.span>;
 interface SliderThumbImplProps extends PrimitiveSpanProps {
     index: number;
     name?: string;
-    thumbRef: React.MutableRef<HTMLSpanElement | null>;
-    setter: React.SetStateAction<HTMLSpanElement | null>;
 }
 
 const SliderThumbImpl = React.forwardRef<

@@ -111,15 +111,16 @@ export function Combobox(
                 {category === "gadgets" &&
                     (
                         <>
-                            <Slider
-                                className="w-full px-4 mt-4 -mb-2 h-6"
-                                defaultValue={gadgetsRange}
-                                minStepsBetweenThumbs={1}
-                                max={12}
-                                min={0}
-                                step={1}
-                                onValueChange={setGadgetsRange}
-                            />
+                            <div className="w-full px-4 mt-4 -mb-2">
+                                <Slider
+                                    className="w-full h-6"
+                                    defaultValue={gadgetsRange}
+                                    max={12}
+                                    min={0}
+                                    step={1}
+                                    onValueChange={setGadgetsRange}
+                                />
+                            </div>
                             <div className="flex justify-center items-center space-x-2 mt-4">
                                 <Label className="text-lg">∩</Label>
                                 <Switch

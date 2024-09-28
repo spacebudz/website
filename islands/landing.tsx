@@ -21,7 +21,7 @@ function Section1() {
     const isAllowingMovement = React.useRef<boolean>(false);
 
     React.useEffect(() => {
-        setTimeout(() => isAllowingMovement.current = true, 2000);
+        setTimeout(() => isAllowingMovement.current = true, 800);
     }, []);
 
     return (
