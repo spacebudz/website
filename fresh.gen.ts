@@ -4,30 +4,21 @@
 
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
+import * as $_layout from "./routes/_layout.tsx";
+import * as $about from "./routes/about.tsx";
 import * as $api_filter_collection from "./routes/api/filter_collection.ts";
-import * as $budz_id_ from "./routes/budz/[id].tsx";
-import * as $budz_layout from "./routes/budz/_layout.tsx";
-import * as $budz_about from "./routes/budz/about.tsx";
-import * as $budz_collection from "./routes/budz/collection.tsx";
-import * as $budz_index from "./routes/budz/index.tsx";
-import * as $charts from "./routes/charts.tsx";
+import * as $collection_id_ from "./routes/collection/[id].tsx";
+import * as $collection_index from "./routes/collection/index.tsx";
 import * as $index from "./routes/index.tsx";
-import * as $accordion_demo from "./islands/accordion_demo.tsx";
 import * as $base from "./islands/base.tsx";
 import * as $bud from "./islands/bud.tsx";
-import * as $charts_1 from "./islands/charts.tsx";
 import * as $circle_animation_mod from "./islands/circle_animation/mod.tsx";
 import * as $collection from "./islands/collection.tsx";
-import * as $combobox_mod from "./islands/combobox/mod.tsx";
-import * as $counter from "./islands/counter.tsx";
-import * as $data_table_mod from "./islands/data_table/mod.tsx";
-import * as $date_picker from "./islands/date_picker.tsx";
-import * as $gifcard from "./islands/gifcard.tsx";
+import * as $combobox from "./islands/combobox.tsx";
 import * as $hooks_use_is_intersecting from "./islands/hooks/use_is_intersecting.tsx";
 import * as $hooks_use_observe_dimension from "./islands/hooks/use_observe_dimension.tsx";
 import * as $hooks_use_toast from "./islands/hooks/use_toast.tsx";
 import * as $providers_theme_provider from "./islands/providers/theme_provider.tsx";
-import * as $toast_demo from "./islands/toast_demo.tsx";
 import * as $toggle_dark_mode from "./islands/toggle_dark_mode.tsx";
 import * as $ui_accordion_mod from "./islands/ui/accordion/mod.tsx";
 import * as $ui_alert_dialog_mod from "./islands/ui/alert_dialog/mod.tsx";
@@ -72,32 +63,23 @@ const manifest = {
   routes: {
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
+    "./routes/_layout.tsx": $_layout,
+    "./routes/about.tsx": $about,
     "./routes/api/filter_collection.ts": $api_filter_collection,
-    "./routes/budz/[id].tsx": $budz_id_,
-    "./routes/budz/_layout.tsx": $budz_layout,
-    "./routes/budz/about.tsx": $budz_about,
-    "./routes/budz/collection.tsx": $budz_collection,
-    "./routes/budz/index.tsx": $budz_index,
-    "./routes/charts.tsx": $charts,
+    "./routes/collection/[id].tsx": $collection_id_,
+    "./routes/collection/index.tsx": $collection_index,
     "./routes/index.tsx": $index,
   },
   islands: {
-    "./islands/accordion_demo.tsx": $accordion_demo,
     "./islands/base.tsx": $base,
     "./islands/bud.tsx": $bud,
-    "./islands/charts.tsx": $charts_1,
     "./islands/circle_animation/mod.tsx": $circle_animation_mod,
     "./islands/collection.tsx": $collection,
-    "./islands/combobox/mod.tsx": $combobox_mod,
-    "./islands/counter.tsx": $counter,
-    "./islands/data_table/mod.tsx": $data_table_mod,
-    "./islands/date_picker.tsx": $date_picker,
-    "./islands/gifcard.tsx": $gifcard,
+    "./islands/combobox.tsx": $combobox,
     "./islands/hooks/use_is_intersecting.tsx": $hooks_use_is_intersecting,
     "./islands/hooks/use_observe_dimension.tsx": $hooks_use_observe_dimension,
     "./islands/hooks/use_toast.tsx": $hooks_use_toast,
     "./islands/providers/theme_provider.tsx": $providers_theme_provider,
-    "./islands/toast_demo.tsx": $toast_demo,
     "./islands/toggle_dark_mode.tsx": $toggle_dark_mode,
     "./islands/ui/accordion/mod.tsx": $ui_accordion_mod,
     "./islands/ui/alert_dialog/mod.tsx": $ui_alert_dialog_mod,

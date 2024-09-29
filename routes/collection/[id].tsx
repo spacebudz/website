@@ -1,11 +1,17 @@
-import type { PageProps } from "$fresh/server.ts";
+import type { Handlers, PageProps } from "$fresh/server.ts";
 import { metadataCollection } from "@/lib/metadata.ts";
 import { Bud } from "@/islands/bud.tsx";
-import { fromText, toLabel } from "https://deno.land/x/lucid@0.10.10/mod.ts";
+import { idToBud } from "@/lib/utils.ts";
 
-function idToBud(id: number): string {
-    return toLabel(222) + fromText(`Bud${id}`);
-}
+export const handler: Handlers = {
+    GET(_req, ctx) {
+        const id = Number(ctx.params.id);
+        if (Number.isNaN(id) || id < 0 || id > 10000) {
+            return ctx.renderNotFound();
+        }
+        return ctx.render();
+    },
+};
 
 export default function BudPage(props: PageProps) {
     const id = parseInt(props.params.id);

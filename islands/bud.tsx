@@ -17,11 +17,10 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card/mod.tsx";
-import { cn } from "@/lib/utils.ts";
+import { cn, ipfsToHttps } from "@/lib/utils.ts";
 import { Badge } from "@/components/ui/badge/mod.tsx";
 import { useObserveElementDimension } from "@/islands/hooks/use_observe_dimension.tsx";
 import type { Metadata } from "@/lib/filter_collection.ts";
-import { ipfsToHttps } from "@/lib/metadata.ts";
 
 export type BudProps = {
     id: number;
@@ -53,13 +52,13 @@ export function Bud({ id, metadata, asset }: BudProps) {
                 <Button asChild variant="outline">
                     <a
                         className="flex justify-center items-center space-x-2"
-                        href="/budz/collection"
+                        href="/collection"
                         onClick={(e) => {
                             if (document?.referrer) {
                                 const referrerUrl = new URL(document.referrer);
                                 if (
                                     new URL(
-                                        "/budz/collection",
+                                        "/collection",
                                         globalThis.origin,
                                     ).href ===
                                         new URL(
@@ -423,7 +422,7 @@ function GadgetsContainer(
                     style={{ left: position.x, top: position.y }}
                 >
                     <a
-                        href={`/budz/collection?${
+                        href={`/collection?${
                             new URLSearchParams(`gadgets=${gadget}`).toString()
                         }`}
                     >

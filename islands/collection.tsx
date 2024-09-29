@@ -3,11 +3,11 @@
 // @deno-types="npm:@types/react@18.3.1"
 import * as React from "react";
 import { useIsIntersecting } from "@/islands/hooks/use_is_intersecting.tsx";
-import { cn, isMobile } from "@/lib/utils.ts";
+import { cn, ipfsToHttps, isMobile } from "@/lib/utils.ts";
 import { IS_BROWSER } from "$fresh/runtime.ts";
 import { PartialCircle } from "@/islands/circle_animation/mod.tsx";
 import { Card, CardContent } from "@/components/ui/card/mod.tsx";
-import { Combobox } from "@/islands/combobox/mod.tsx";
+import { Combobox } from "@/islands/combobox.tsx";
 import {
   ChevronUpIcon,
   ResetIcon,
@@ -22,7 +22,6 @@ import {
   type FilterResult,
   MetadataCollection,
 } from "@/lib/filter_collection.ts";
-import { ipfsToHttps } from "@/lib/metadata.ts";
 
 const speciesData = [
   "Alien",
@@ -234,7 +233,6 @@ export function ScrollPanel(
       ref.current.addEventListener("touchmove", handleTouchMove);
       ref.current.addEventListener("touchend", handleTouchEnd);
 
-      // Cleanup event listeners on unmount
       return () => {
         if (ref.current) {
           ref.current.removeEventListener("touchstart", handleTouchStart);
@@ -565,7 +563,7 @@ function Item(
       {isIntersecting && (
         <a
           tabIndex={0}
-          href={`/budz/${metadata.id}`}
+          href={`/collection/${metadata.id}`}
           className="group"
         >
           <div

@@ -1,14 +1,15 @@
 import { type PageProps } from "$fresh/server.ts";
 import { Toaster } from "@/islands/ui/toast/toaster.tsx";
 import { ThemeProvider } from "@/islands/providers/theme_provider.tsx";
-import { ipfsToHttps, metadataCollection } from "@/lib/metadata.ts";
+import { ipfsToHttps } from "@/lib/utils.ts";
+import { metadataCollection } from "@/lib/metadata.ts";
 
 export default function App({ Component, url, route, params }: PageProps) {
   const title = "SpaceBudz";
   const id = route === "/budz/:id" ? params.id : null;
   const image = id
     ? ipfsToHttps(metadataCollection[id].image, 300)
-    : new URL("/logo.svg", url.origin).href;
+    : new URL("/logo.png", url.origin).href;
   const description = id
     ? `#${id}`
     : "A collection of cosmic explorers embarking on adventures through the limitless frontier of a decentralized universe.";

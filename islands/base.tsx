@@ -27,7 +27,7 @@ function Section1() {
     return (
         <div
             className="w-full h-screen flex justify-center items-center"
-            onClick={() => location.assign("/budz/collection")}
+            onClick={() => location.assign("/collection")}
         >
             <div
                 className="relative w-[300px] h-[300px] md:w-[600px] md:h-[600px]"

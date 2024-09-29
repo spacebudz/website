@@ -30,19 +30,19 @@ function Footer() {
                 <div className="w-full flex justify-center space-x-20">
                     <div className="flex flex-col items-start space-y-3">
                         <a
-                            href="/budz"
+                            href="/"
                             className="hover:underline underline-offset-4"
                         >
                             Base
                         </a>
                         <a
-                            href="/budz/collection"
+                            href="/collection"
                             className="hover:underline underline-offset-4"
                         >
                             Collection
                         </a>
                         <a
-                            href="/budz/about"
+                            href="/about"
                             className="hover:underline underline-offset-4"
                         >
                             About
