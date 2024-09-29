@@ -1,19 +1,8 @@
 import { type PageProps } from "$fresh/server.ts";
 import { Toaster } from "@/islands/ui/toast/toaster.tsx";
 import { ThemeProvider } from "@/islands/providers/theme_provider.tsx";
-import { ipfsToHttps } from "@/lib/utils.ts";
-import { metadataCollection } from "@/lib/metadata.ts";
 
-export default function App({ Component, url, route, params }: PageProps) {
-  const title = "SpaceBudz";
-  const id = route === "/budz/:id" ? params.id : null;
-  const image = id
-    ? ipfsToHttps(metadataCollection[id].image, 300)
-    : new URL("/logo.png", url.origin).href;
-  const description = id
-    ? `#${id}`
-    : "A collection of cosmic explorers embarking on adventures through the limitless frontier of a decentralized universe.";
-
+export default function App({ Component }: PageProps) {
   return (
     <html>
       <head>
@@ -26,7 +15,7 @@ export default function App({ Component, url, route, params }: PageProps) {
         />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>{title}</title>
+        <title>SpaceBudz</title>
         <link rel="stylesheet" href="/styles.css" />
         <link
           rel="apple-touch-icon"
@@ -47,23 +36,6 @@ export default function App({ Component, url, route, params }: PageProps) {
         />
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
-        <meta name="description" content={description} />
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:site" content="@spacebudznft" />
-        <meta name="twitter:title" content="SpaceBudz" />
-        <meta name="twitter:description" content={description} />
-        <meta
-          name="twitter:image"
-          content={image}
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={url.href} />
-        <meta property="og:title" content="SpaceBudz" />
-        <meta property="og:description" content={description} />
-        <meta
-          property="og:image"
-          content={image}
-        />
       </head>
       <body>
         <ThemeProvider>

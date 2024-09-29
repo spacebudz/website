@@ -1,7 +1,8 @@
 import type { Handlers, PageProps } from "$fresh/server.ts";
 import { metadataCollection } from "@/lib/metadata.ts";
 import { Bud } from "@/islands/bud.tsx";
-import { idToBud } from "@/lib/utils.ts";
+import { idToBud, ipfsToHttps } from "@/lib/utils.ts";
+import { Head } from "$fresh/runtime.ts";
 
 export const handler: Handlers = {
     GET(_req, ctx) {
@@ -20,9 +21,33 @@ export default function BudPage(props: PageProps) {
         assetName: idToBud(id),
     };
     const metadata = metadataCollection[id];
+    const description = "#" + id;
+    const image = ipfsToHttps(metadata.image, 300);
 
     return (
         <>
+            <Head>
+                <meta
+                    name="twitter:description"
+                    content={description}
+                    key="twitter:description"
+                />
+                <meta
+                    name="twitter:image"
+                    content={image}
+                    key="twitter:image"
+                />
+                <meta
+                    property="og:description"
+                    content={description}
+                    key="og:description"
+                />
+                <meta
+                    property="og:image"
+                    content={image}
+                    key="og:image"
+                />
+            </Head>
             <Bud
                 id={id}
                 metadata={metadata}

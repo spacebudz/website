@@ -2,20 +2,55 @@ import { PageProps } from "$fresh/server.ts";
 import { ModeToggle } from "@/islands/toggle_dark_mode.tsx";
 import { Button } from "@/components/ui/button/mod.tsx";
 import { DiscordLogoIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
+import { Head } from "$fresh/runtime.ts";
 
-export default function Layout({ Component }: PageProps) {
+export default function Layout({ Component, url }: PageProps) {
+    const image = new URL("/logo.png", url.origin).href;
+    const description =
+        "A collection of cosmic explorers embarking on adventures through the limitless frontier of a decentralized universe.";
     return (
-        <div>
-            <div className="w-full h-full flex justify-center">
-                <div className="w-full max-w-screen-2xl h-full flex flex-col">
-                    <div className="w-full min-h-screen">
-                        {/* @ts-ignore */}
-                        <Component />
+        <>
+            <Head>
+                <meta name="description" content={description} />
+                <meta name="twitter:card" content="summary" />
+                <meta name="twitter:site" content="@spacebudznft" />
+                <meta name="twitter:title" content="SpaceBudz" />
+                <meta
+                    name="twitter:description"
+                    content={description}
+                    key="twitter:description"
+                />
+                <meta
+                    name="twitter:image"
+                    content={image}
+                    key="twitter:image"
+                />
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content={url.href} />
+                <meta property="og:title" content="SpaceBudz" />
+                <meta
+                    property="og:description"
+                    content={description}
+                    key="og:description"
+                />
+                <meta
+                    property="og:image"
+                    content={image}
+                    key="og:image"
+                />
+            </Head>
+            <div>
+                <div className="w-full h-full flex justify-center">
+                    <div className="w-full max-w-screen-2xl h-full flex flex-col">
+                        <div className="w-full min-h-screen">
+                            {/* @ts-ignore */}
+                            <Component />
+                        </div>
+                        <Footer />
                     </div>
-                    <Footer />
                 </div>
             </div>
-        </div>
+        </>
     );
 }
 
