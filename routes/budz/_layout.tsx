@@ -50,7 +50,7 @@ function Footer() {
                     </div>
                     <div className="flex flex-col items-start space-y-3">
                         <a
-                            href="https://spacebudz.gitbook.io/spacebudz/the-collection"
+                            href="https://spacebudz.gitbook.io/spacebudz"
                             target="_blank"
                             className="hover:underline underline-offset-4"
                         >

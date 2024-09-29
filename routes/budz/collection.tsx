@@ -7,7 +7,7 @@ import {
     CardFooter,
     CardHeader,
 } from "@/components/ui/card/mod.tsx";
-import metadata from "https://raw.githubusercontent.com/spacebudz/wormhole/refs/heads/main/artifacts/metadata.json" with {
+import metadataCollectionWithoutType from "https://raw.githubusercontent.com/spacebudz/wormhole/refs/heads/main/artifacts/metadata.json" with {
     type: "json",
 };
 import {
@@ -17,9 +17,11 @@ import {
 import { PageProps } from "$fresh/server.ts";
 import { useSignal } from "@preact/signals";
 
+const metadataCollection: MetadataCollection = metadataCollectionWithoutType;
+
 export default function CollectionPage(props: PageProps) {
     const data = useSignal(filterCollection({
-        metadataCollection: metadata as MetadataCollection,
+        metadataCollection,
         params: props.url.searchParams,
     }));
 

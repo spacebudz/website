@@ -1,7 +1,7 @@
-import { Landing } from "@/islands/landing.tsx";
+import { Base } from "@/islands/base.tsx";
 import { Head } from "$fresh/runtime.ts";
 
-export default function LandingPage() {
+export default function BasePage() {
     return (
         <>
             <Head>
@@ -12,7 +12,7 @@ export default function LandingPage() {
                     }}
                 />
             </Head>
-            <Landing />
+            <Base />
         </>
     );
 }

@@ -127,7 +127,7 @@ function Section2() {
     );
 }
 
-export function Landing() {
+export function Base() {
     return (
         <div className="flex w-full flex-col">
             <Section1 />

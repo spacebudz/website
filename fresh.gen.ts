@@ -13,6 +13,7 @@ import * as $budz_index from "./routes/budz/index.tsx";
 import * as $charts from "./routes/charts.tsx";
 import * as $index from "./routes/index.tsx";
 import * as $accordion_demo from "./islands/accordion_demo.tsx";
+import * as $base from "./islands/base.tsx";
 import * as $bud from "./islands/bud.tsx";
 import * as $charts_1 from "./islands/charts.tsx";
 import * as $circle_animation_mod from "./islands/circle_animation/mod.tsx";
@@ -25,7 +26,6 @@ import * as $gifcard from "./islands/gifcard.tsx";
 import * as $hooks_use_is_intersecting from "./islands/hooks/use_is_intersecting.tsx";
 import * as $hooks_use_observe_dimension from "./islands/hooks/use_observe_dimension.tsx";
 import * as $hooks_use_toast from "./islands/hooks/use_toast.tsx";
-import * as $landing from "./islands/landing.tsx";
 import * as $providers_theme_provider from "./islands/providers/theme_provider.tsx";
 import * as $toast_demo from "./islands/toast_demo.tsx";
 import * as $toggle_dark_mode from "./islands/toggle_dark_mode.tsx";
@@ -83,6 +83,7 @@ const manifest = {
   },
   islands: {
     "./islands/accordion_demo.tsx": $accordion_demo,
+    "./islands/base.tsx": $base,
     "./islands/bud.tsx": $bud,
     "./islands/charts.tsx": $charts_1,
     "./islands/circle_animation/mod.tsx": $circle_animation_mod,
@@ -95,7 +96,6 @@ const manifest = {
     "./islands/hooks/use_is_intersecting.tsx": $hooks_use_is_intersecting,
     "./islands/hooks/use_observe_dimension.tsx": $hooks_use_observe_dimension,
     "./islands/hooks/use_toast.tsx": $hooks_use_toast,
-    "./islands/landing.tsx": $landing,
     "./islands/providers/theme_provider.tsx": $providers_theme_provider,
     "./islands/toast_demo.tsx": $toast_demo,
     "./islands/toggle_dark_mode.tsx": $toggle_dark_mode,
