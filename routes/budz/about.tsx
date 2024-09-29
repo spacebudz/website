@@ -1,7 +1,7 @@
 export default function AboutPage() {
     return (
         <div className="w-full h-screen flex items-center justify-center">
-            <div className="max-w-screen-sm px-8 leading-8">
+            <div className="max-w-screen-sm px-10 leading-7 md:leading-8">
                 SpaceBudz, founded by Zieg and Alessandro, was launched in March
                 2021 on the Cardano blockchain. It quickly became a beloved
                 project in the Cardano community, renowned for its

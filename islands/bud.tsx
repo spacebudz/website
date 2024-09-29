@@ -38,7 +38,6 @@ export function Bud({ id, metadata, asset }: BudProps) {
     );
 
     React.useEffect(() => {
-        // preload image
         const image = new Image();
         image.src = src;
         image.onload = () => {
@@ -104,7 +103,7 @@ export function Bud({ id, metadata, asset }: BudProps) {
                                 </div>
                             </div>
                         </div>
-                        <div className="w-full h-full lg:w-2/5 flex flex-col items-center px-6 pt-6 lg:px-0 lg:pt-0 lg:pr-12 animate-out opacity-0 fade-out-100 delay-1000 duration-1000 fill-mode-forwards">
+                        <div className="w-full h-full lg:w-2/5 flex flex-col items-center px-6 lg:px-0 pt-6 lg:pt-0 lg:pr-12 animate-out opacity-0 fade-out-100 delay-1000 duration-1000 fill-mode-forwards">
                             <div className="text-3xl font-bold text-left w-full">
                                 <a href="#">{metadata.type}</a>
                             </div>
@@ -206,6 +205,7 @@ export function Bud({ id, metadata, asset }: BudProps) {
                                         <div className="flex items-center">
                                             <img
                                                 draggable={false}
+                                                // TODO: change as soon as domain is changed
                                                 src="https://spacebudz.io/favicon-32x32.png"
                                                 className="w-4 h-4"
                                             />
@@ -214,7 +214,7 @@ export function Bud({ id, metadata, asset }: BudProps) {
                                                     href={`https://spacebudz.io/spacebud/${id}/`}
                                                     target="_blank"
                                                 >
-                                                    store.spacebudz.io
+                                                    app.spacebudz.io
                                                 </a>
                                             </Button>
                                         </div>
@@ -310,7 +310,7 @@ function GadgetsContainer(
         },
     ) {
         const controlPointX = (from.x + to.x) / 2;
-        const controlPointY = from.y > to.y ? from.y - 80 : from.y + 80; // Increase vertical offset for more curvature
+        const controlPointY = from.y > to.y ? from.y - 80 : from.y + 80;
 
         return (
             <svg
