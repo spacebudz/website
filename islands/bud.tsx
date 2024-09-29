@@ -21,6 +21,7 @@ import { cn } from "@/lib/utils.ts";
 import { Badge } from "@/components/ui/badge/mod.tsx";
 import { useObserveElementDimension } from "@/islands/hooks/use_observe_dimension.tsx";
 import type { Metadata } from "@/lib/filter_collection.ts";
+import { ipfsToHttps } from "@/lib/metadata.ts";
 
 export type BudProps = {
     id: number;
@@ -29,9 +30,7 @@ export type BudProps = {
 };
 
 export function Bud({ id, metadata, asset }: BudProps) {
-    const src = `https://spacebudz.mypinata.cloud/ipfs/${
-        metadata.image.split("ipfs://")[1]
-    }?pinataGatewayToken=sSzgtarDGSZukrz9lNYbbF30wPGLmIr_UWug05lQPddzrCK5tXa-G-QI7zMgG79m`;
+    const src = ipfsToHttps(metadata.image);
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
     const [isShowingMetadata, setIsShowingMetadata] = React.useState<boolean>(
         false,

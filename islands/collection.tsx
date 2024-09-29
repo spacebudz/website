@@ -22,6 +22,7 @@ import {
   type FilterResult,
   MetadataCollection,
 } from "@/lib/filter_collection.ts";
+import { ipfsToHttps } from "@/lib/metadata.ts";
 
 const speciesData = [
   "Alien",
@@ -381,9 +382,9 @@ export function InfiniteGrid(
 
   React.useEffect(() => {
     import(
-      "https://raw.githubusercontent.com/spacebudz/wormhole/refs/heads/main/artifacts/metadata.json"
-    ).then(({ default: m }) => {
-      localMetadataCollection.current = m;
+      "@/lib/metadata.ts"
+    ).then(({ metadataCollection }) => {
+      localMetadataCollection.current = metadataCollection;
     });
 
     async function onAppliedFilter(e: Event) {
@@ -517,9 +518,7 @@ function Item(
   React.useEffect(() => {
     if (imageRef.current) {
       setIsLoadingImage(true);
-      imageRef.current.src = `https://spacebudz.mypinata.cloud/ipfs/${
-        metadata.image.split("ipfs://")[1]
-      }?pinataGatewayToken=sSzgtarDGSZukrz9lNYbbF30wPGLmIr_UWug05lQPddzrCK5tXa-G-QI7zMgG79m&img-width=600`;
+      imageRef.current.src = ipfsToHttps(metadata.image, 600);
       imageRef.current.onload = () => {
         setIsLoadingImage(false);
       };
