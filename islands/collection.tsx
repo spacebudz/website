@@ -11,6 +11,7 @@ import { Combobox } from "@/islands/combobox.tsx";
 import {
   ChevronUpIcon,
   ResetIcon,
+  ShuffleIcon,
   TextAlignBottomIcon,
   TextAlignTopIcon,
 } from "@radix-ui/react-icons";
@@ -106,8 +107,8 @@ export function ScrollPanel(
     (IS_BROWSER && new URL(globalThis.location.href)) as URL,
   );
 
-  const [isDescending, setIsDescending] = React.useState<boolean>(() =>
-    Boolean(url.searchParams?.get("sort"))
+  const [sort, setSort] = React.useState<"asc" | "desc" | null>(() =>
+    url.searchParams?.get("sort") as "asc" | "desc" | null || null
   );
   const [id, setId] = React.useState<{ value: string }>(() => ({
     value: url.searchParams?.get("id") || "",
@@ -129,9 +130,8 @@ export function ScrollPanel(
 
   const urlSearchParams = React.useMemo(() => {
     const params = new URLSearchParams();
-    if (isDescending) {
-      params.set("sort", "desc");
-    }
+
+    if (sort) params.set("sort", sort);
     if (id.value) params.set("id", id.value);
     if (isGadgetsUnion) params.set("gadgets_union", JSON.stringify(true));
     if (gadgetsRange.toString() !== [0, 12].toString()) {
@@ -144,7 +144,7 @@ export function ScrollPanel(
       params.append("gadgets", g);
     });
     return params;
-  }, [isDescending, id, species, gadgets, isGadgetsUnion, gadgetsRange]);
+  }, [sort, id, species, gadgets, isGadgetsUnion, gadgetsRange]);
 
   const hasMatchingParams = typeof url.searchParams === "undefined" ||
     urlSearchParams.toString() === url.searchParams.toString();
@@ -309,13 +309,16 @@ export function ScrollPanel(
           <Button
             variant="outline"
             onClick={() => {
-              setIsDescending((v) => !v);
+              setSort((v) => {
+                if (v === "asc") return "desc";
+                return "asc";
+              });
             }}
           >
             Sort
-            {isDescending
-              ? <TextAlignBottomIcon className="-mt-1 ml-1" />
-              : <TextAlignTopIcon className="ml-1 mt-1" />}
+            {!sort && <ShuffleIcon className="ml-1 scale-[85%]" />}
+            {sort === "asc" && <TextAlignTopIcon className="ml-1 mt-1" />}
+            {sort === "desc" && <TextAlignBottomIcon className="ml-1 -mt-1" />}
           </Button>
         </div>
         <Button
@@ -345,7 +348,7 @@ export function ScrollPanel(
           size="icon"
           onClick={() => {
             setId({ value: "" });
-            setIsDescending(false);
+            setSort(null);
             setSpecies([]);
             setGadgets([]);
             setIsGadgetsUnion(false);

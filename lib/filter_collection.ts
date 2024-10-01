@@ -1,4 +1,6 @@
-export const BATCH_SIZE = 20;
+import { shuffleArrayWithSeed } from "@/lib/utils.ts";
+
+export const BATCH_SIZE = 50;
 
 export type MetadataCollection = Record<string, Metadata>;
 
@@ -72,15 +74,21 @@ class Filter {
     }
 
     byId(): Filter {
-        const id = this.params.get("id");
-        if (id) this.metadata = [this.metadata[parseInt(id)]];
+        const id = parseInt(this.params.get("id") || "");
+        if (id) this.metadata = [this.metadata[id]];
         return this;
     }
 
     bySort(): Filter {
-        if (this.params.get("sort") === "desc") {
-            this.metadata.reverse();
+        const sort = this.params.get("sort") as "asc" | "desc" | null;
+        if (sort === "asc") {
+            return this;
         }
+        if (sort === "desc") {
+            this.metadata.reverse();
+            return this;
+        }
+        this.metadata = shuffleArrayWithSeed(this.metadata, generateDateSeed());
         return this;
     }
 
@@ -134,4 +142,12 @@ class Filter {
             species: m.type,
         }));
     }
+}
+
+function generateDateSeed(): string {
+    const now = new Date();
+    const day = now.getUTCDate();
+    const month = now.getUTCMonth();
+    const year = now.getUTCFullYear();
+    return `${day}${month}${year}`;
 }

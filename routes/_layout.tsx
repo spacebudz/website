@@ -92,7 +92,7 @@ function Footer() {
                             Guide
                         </a>
                         <a
-                            href="https://spacebudz.io/license"
+                            href="https://app.spacebudz.io/license"
                             target="_blank"
                             className="hover:underline underline-offset-4"
                         >
@@ -106,14 +106,14 @@ function Footer() {
                             Nebula
                         </a>
                         <a
-                            href="#"
+                            href="https://app.spacebudz.io"
                             target="_blank"
                             className="hover:underline underline-offset-4"
                         >
                             Store
                         </a>
                         <a
-                            href="https://spacebudz.io/wormhole"
+                            href="https://app.spacebudz.io/wormhole"
                             target="_blank"
                             className="hover:underline underline-offset-4"
                         >
