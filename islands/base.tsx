@@ -1,5 +1,6 @@
 import * as React from "react";
-import { isMobile } from "@/lib/utils.ts";
+import { cn, isMobile } from "@/lib/utils.ts";
+import { useIsIntersecting } from "@/islands/hooks/use_is_intersecting.tsx";
 
 const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -26,7 +27,7 @@ function Section1() {
 
     return (
         <div
-            className="w-full h-screen flex justify-center items-center"
+            className="w-full h-screen flex justify-center items-center relative"
             onClick={() => location.assign("/collection")}
         >
             <div
@@ -68,7 +69,7 @@ function Section1() {
                         className="animate-out delay-700 duration-1000 opacity-0 fade-out-100 fill-mode-forwards w-full h-full"
                     />
                 </div>
-                <div className="-bottom-10 md:-bottom-2 animate-out delay-1000 duration-500 opacity-0 fade-out-100 fill-mode-forwards select-none absolute w-full text-center font-mono">
+                <div className="landscape:hidden lg:landscape:block -bottom-10 md:-bottom-2 animate-out delay-1000 duration-500 opacity-0 fade-out-100 fill-mode-forwards select-none absolute w-full text-center font-mono">
                     Press to enter
                 </div>
             </div>
@@ -77,52 +78,157 @@ function Section1() {
 }
 
 function Section2() {
-    const [scrollPercent, setScrollPercent] = React.useState(0);
-    const pathLength = 800; // Total length of the SVG path
-    const scrollSpeedModifier = 0.25; // Slow down the reveal by a factor of 2 (feel free to adjust)
+    const ref = React.useRef<HTMLDivElement>(null);
+    const isIntersecting = useIsIntersecting(ref, { once: true });
+    const [animation, setAnimation] = React.useState(false);
 
     React.useEffect(() => {
-        const handleScroll = () => {
-            const scrollTop = globalThis.scrollY;
-            const docHeight = document.documentElement.scrollHeight -
-                globalThis.innerHeight;
-            const scrollFraction = scrollTop / docHeight;
-
-            // Multiply the scrollFraction by the scrollSpeedModifier to slow down the path reveal
-            const adjustedScrollFraction = scrollFraction * scrollSpeedModifier;
-
-            // Ensure the scrollPercent doesn't exceed 1 (fully visible path)
-            setScrollPercent(Math.min(adjustedScrollFraction, 1));
-        };
-
-        globalThis.addEventListener("scroll", handleScroll);
-        return () => {
-            globalThis.removeEventListener("scroll", handleScroll);
-        };
-    }, []);
+        if (isIntersecting) {
+            setTimeout(() => {
+                setAnimation(true);
+            }, 3000);
+        }
+    }, [isIntersecting]);
 
     return (
-        <div className="relative h-[200vh]">
-            <div className="absolute inset-0 flex items-center justify-center">
+        <div
+            ref={ref}
+            className="w-full h-[1500px] md:h-[1200px] flex flex-col items-center relative mt-20 md:mt-52"
+        >
+            <div
+                className={cn(
+                    "absolute w-4/5 h-7 bg-primary",
+                    animation &&
+                        "translate-x-0 translate-y-32 h-[1px] w-[300px] transition-all duration-700",
+                )}
+            />
+            <div
+                className={cn(
+                    "absolute text-secondary font-mono font-bold text-lg",
+                    animation && "text-primary",
+                )}
+            >
+                As a line of code {animation && "..."}
+            </div>
+            <div
+                className={cn(
+                    "absolute w-4 h-7 bg-background",
+                    animation &&
+                        "translate-x-0 translate-y-[428px] h-[1px] w-[300px] bg-primary transition-all duration-700",
+                    !animation && "animate-cursor-blink -mr-[110px] right-2/4",
+                )}
+            />
+            <div
+                className={cn(
+                    "absolute",
+                    animation &&
+                        "-translate-x-[150px] translate-y-32 w-[1px] h-[301px] bg-primary transition-all duration-500 delay-200",
+                )}
+            />
+            <div
+                className={cn(
+                    "absolute",
+                    animation &&
+                        "translate-x-[150px] translate-y-32 w-[1px] h-[301px] bg-primary transition-all duration-500 delay-200",
+                )}
+            />
+            <div
+                className={cn(
+                    "absolute opacity-0 top-[278px] origin-center w-[300px] h-[0.5px] bg-primary",
+                    animation &&
+                        "opacity-30 transition-all delay-300 duration-700 rotate-90",
+                )}
+            />
+            <div
+                className={cn(
+                    "absolute opacity-0 top-[278px] origin-center w-[300px] h-[0.5px] bg-primary",
+                    animation &&
+                        "opacity-30 transition-all delay-300 duration-700 rotate-180",
+                )}
+            />
+            <div
+                className={cn(
+                    "absolute opacity-0 top-[278px] origin-center w-[300px] h-[0.5px] bg-primary",
+                    animation &&
+                        "opacity-20 transition-all delay-300 rotate-45 duration-700",
+                )}
+            />
+            <div
+                className={cn(
+                    "absolute opacity-0 top-[278px] origin-center w-[300px] h-[0.5px] bg-primary",
+                    animation &&
+                        "opacity-20 transition-all delay-300 -rotate-45 duration-700",
+                )}
+            />
+
+            <div
+                className={cn(
+                    "absolute opacity-0 scale-90 w-[250px] h-[250px] top-[153px]",
+                    animation &&
+                        "opacity-100 scale-100 transition-all duration-500 delay-500",
+                )}
+            >
+                <img
+                    draggable={false}
+                    src="/preview.svg"
+                    className="w-full h-full"
+                />
+            </div>
+            <div
+                className={cn(
+                    "absolute opacity-0 top-[267px] -translate-x-[140px] font-mont text-sm font-bold",
+                    animation &&
+                        "opacity-90 transition-opacity duration-500 delay-700",
+                )}
+            >
+                x
+            </div>
+            <div
+                className={cn(
+                    "absolute top-[408px] opacity-0 font-mono text-sm font-bold",
+                    animation &&
+                        "opacity-90 transition-opacity duration-200 delay-700",
+                )}
+            >
+                x
+            </div>
+            <div
+                className={cn(
+                    "absolute top-[436px] translate-x-[120px] opacity-0 font-mono text-xs",
+                    animation &&
+                        "opacity-80 transition-opacity duration-200 delay-700",
+                )}
+            >
+                x=1000
             </div>
 
-            {/* SVG Path */}
-            <svg
-                className="absolute top-0 left-0 w-full h-full"
-                viewBox="0 0 100 200"
-                preserveAspectRatio="none"
+            <div
+                className={cn(
+                    "absolute top-[528px] max-w-screen-sm px-10 leading-7 md:leading-8 opacity-0 transition-opacity delay-1000 duration-500",
+                    animation && "opacity-100",
+                )}
             >
-                <path
-                    className="stroke-primary stroke-[0.05] fill-none"
-                    d="M10 10 C 20 20, 40 0, 50 50 S 90 80, 80 150"
-                    style={{
-                        strokeDasharray: pathLength,
-                        strokeDashoffset: pathLength -
-                            scrollPercent * pathLength,
-                        transition: "stroke-dashoffset 0.1s ease-out",
-                    }}
-                />
-            </svg>
+                ... unraveled, an unseen force stirred beneath the surface of
+                reality. In unexpected places, certain individuals were
+                unknowingly drawn to a greater purpose. These were the SpaceBudz
+                — digital explorers from a realm beyond the stars. At first
+                glance, they were simple avatars, little astronauts suspended in
+                a vast decentralized universe. Yet, in every SpaceBud there is a
+                symbol of something deeper — a reflection of human curiosity,
+                innovation, and the courage to step into the unknown. They were
+                not just characters and collectibles in a virtual world, but
+                representations of a new era, where technology and imagination
+                intertwined to push the boundaries of what was possible.
+                <br />
+                And so, the story began, teaching a simple yet profound truth:
+                we too often wander through life, unaware of the vast potential
+                lying dormant within us. It is only when we are called to
+                adventure, to step beyond the familiar, that we discover our
+                true purpose. The journey may be uncertain, but it teaches us
+                that the unknown is not something to fear—it is an invitation to
+                grow, to learn, and to evolve. Every choice, every step forward,
+                brings us closer to becoming who we are meant to be.
+            </div>
         </div>
     );
 }
