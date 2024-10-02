@@ -38,8 +38,8 @@ export function filterCollection({
     batchSize = BATCH_SIZE,
 }: FilterCollection): FilterResult {
     const result = new Filter(metadataCollection, params)
-        .bySort()
         .byId()
+        .bySort()
         .bySpecies()
         .byGadgets()
         .byGadgetsRange()
