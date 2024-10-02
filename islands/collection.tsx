@@ -97,7 +97,7 @@ export function ScrollPanel(
     rootMargin: "-1px 0px 0px 0px",
   });
   const isSticky = typeof isIntersecting !== "undefined" && !isIntersecting;
-  const [isShowing, setIsShowing] = React.useState<boolean>(true);
+  const [isShowing, setIsShowing] = React.useState<boolean>();
   const isStickyRef = React.useRef(isSticky);
   const isShowingRef = React.useRef(isShowing);
 
@@ -150,9 +150,7 @@ export function ScrollPanel(
     urlSearchParams.toString() === url.searchParams.toString();
 
   React.useEffect(() => {
-    let distance = 0;
-    let timeout: number;
-    function onScroll() {
+    function handleScroll() {
       const activeElement = document.activeElement;
       if (
         !isMobile && ref.current && ref.current.contains(activeElement) &&
@@ -161,19 +159,13 @@ export function ScrollPanel(
         activeElement.blur();
       }
 
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        distance = 0;
-      }, 200);
-
-      distance++;
-      if (distance > 4 && isStickyRef.current) {
-        setTimeout(() => setIsShowing(false));
+      if (isStickyRef.current) {
+        setIsShowing(false);
       }
     }
-    globalThis.addEventListener("scroll", onScroll);
+    globalThis.addEventListener("scroll", handleScroll);
     return () => {
-      globalThis.removeEventListener("scroll", onScroll);
+      globalThis.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -219,7 +211,7 @@ export function ScrollPanel(
           const deltaY = currentY - startY;
 
           if (deltaY > 0) {
-            setTop(Math.min(-128 + Math.floor(deltaY), -1));
+            setTop(Math.min(-130 + Math.floor(deltaY), -1));
           }
         }
       };
@@ -249,9 +241,9 @@ export function ScrollPanel(
       onClick={() => setIsShowing(true)}
       ref={ref}
       className={cn(
-        "w-full h-full sticky -top-32 mt-2 shadow-none overflow-hidden z-20",
+        "w-full h-full sticky -top-[130px] mt-2 shadow-none overflow-hidden z-20 will-change-[top,transform]",
         isSticky &&
-          "rounded-t-none border border-t-0 shadow will-change-transform",
+          "rounded-t-none border shadow",
         isSticky && !Number.isInteger(top) &&
           "transition-all duration-300",
         isSticky && isShowing && "-top-[1px]",

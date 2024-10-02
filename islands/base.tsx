@@ -67,10 +67,10 @@ function Section1() {
                     <img
                         draggable={false}
                         src="/spacebudz.svg"
-                        className="animate-out delay-700 duration-1000 opacity-0 fade-out-100 fill-mode-forwards w-full h-full"
+                        className="animate-in delay-700 duration-1000 fade-in fill-mode-both w-full h-full"
                     />
                 </div>
-                <div className="landscape:hidden lg:landscape:block -bottom-10 md:-bottom-2 animate-out delay-1000 duration-500 opacity-0 fade-out-100 fill-mode-forwards select-none absolute w-full text-center font-mono">
+                <div className="landscape:hidden lg:landscape:block -bottom-10 md:-bottom-2 animate-in delay-1000 duration-500 fade-in fill-mode-both select-none absolute w-full text-center font-mono">
                     Press to enter
                 </div>
             </div>

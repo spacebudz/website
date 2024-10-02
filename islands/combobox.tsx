@@ -48,25 +48,6 @@ export function Combobox(
     const [open, setOpen] = React.useState(false);
     const focusRef = React.useRef<HTMLInputElement>(null);
 
-    React.useEffect(() => {
-        let distance = 0;
-        let timeout: number;
-        function onScroll(_e: Event) {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => {
-                distance = 0;
-            }, 200);
-            distance++;
-            if (distance > 4) {
-                setOpen(false);
-            }
-        }
-        globalThis.addEventListener("scroll", onScroll);
-        return () => {
-            globalThis.removeEventListener("scroll", onScroll);
-        };
-    }, []);
-
     return (
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
@@ -74,8 +55,7 @@ export function Combobox(
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className="w-full justify-between"
-                    style={{ touchAction: "manipulation" }}
+                    className="w-full justify-between touch-manipulation"
                 >
                     {category === "species" && value.length <= 0 &&
                         "None applied"}
@@ -100,6 +80,8 @@ export function Combobox(
                 </Button>
             </PopoverTrigger>
             <PopoverContent
+                hideWhenDetached
+                avoidCollisions={false}
                 className="w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height] p-0"
                 onOpenAutoFocus={(e) => {
                     e.preventDefault();
@@ -126,8 +108,7 @@ export function Combobox(
                                 <Switch
                                     checked={isGadgetsUnion}
                                     onCheckedChange={setIsGadgetsUnion}
-                                    className="data-[state=checked]:bg-input"
-                                    style={{ touchAction: "manipulation" }}
+                                    className="data-[state=checked]:bg-input touch-manipulation"
                                 />
                                 <Label className="text-lg">∪</Label>
                             </div>
@@ -144,7 +125,7 @@ export function Combobox(
                         <CommandGroup>
                             {data.map((d, index) => (
                                 <CommandItem
-                                    style={{ touchAction: "manipulation" }}
+                                    className="touch-manipulation"
                                     key={index}
                                     value={d}
                                     onSelect={(currentValue) => {
