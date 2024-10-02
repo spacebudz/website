@@ -82,11 +82,11 @@ function Section1() {
                 </div>
                 <div
                     className={cn(
-                        "landscape:hidden lg:landscape:block -bottom-10 md:-bottom-2 animate-in delay-1000 duration-500 fade-in fill-mode-both select-none absolute w-full text-center font-mono",
+                        "landscape:hidden lg:landscape:block -bottom-12 md:-bottom-4 animate-in delay-1000 duration-500 fade-in fill-mode-both select-none absolute w-full text-center font-mono",
                         isLoadingImage && "hidden",
                     )}
                 >
-                    Press to enter
+                    Press to enter / <br /> scroll to discover
                 </div>
             </div>
         </div>
@@ -133,7 +133,7 @@ function Section2() {
     }, [isIntersecting]);
 
     return (
-        <div className="w-full h-[1500px] md:h-[1200px] flex flex-col items-center relative mt-20 md:mt-52">
+        <div className="w-full h-[1500px] md:h-[1200px] flex flex-col items-center relative mt-32 md:mt-72">
             <div
                 className={cn(
                     "absolute w-4/5 h-7 bg-primary",
