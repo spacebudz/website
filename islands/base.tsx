@@ -21,8 +21,15 @@ function Section1() {
         { x: number; y: number }
     >();
     const isAllowingMovement = React.useRef<boolean>(false);
+    const [isLoadingImage, setIsLoadingImage] = React.useState(true);
+    const src = "/spacebudz.svg";
 
     React.useEffect(() => {
+        const image = new Image();
+        image.src = src;
+        image.onload = () => {
+            setIsLoadingImage(false);
+        };
         setTimeout(() => isAllowingMovement.current = true, 800);
     }, []);
 
@@ -66,11 +73,19 @@ function Section1() {
                 <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[250px] md:w-[300px] md:h-[300px]">
                     <img
                         draggable={false}
-                        src="/spacebudz.svg"
-                        className="animate-in delay-700 duration-1000 fade-in fill-mode-both w-full h-full"
+                        src={src}
+                        className={cn(
+                            "animate-in delay-700 duration-1000 fade-in fill-mode-both w-full h-full",
+                            isLoadingImage && "hidden",
+                        )}
                     />
                 </div>
-                <div className="landscape:hidden lg:landscape:block -bottom-10 md:-bottom-2 animate-in delay-1000 duration-500 fade-in fill-mode-both select-none absolute w-full text-center font-mono">
+                <div
+                    className={cn(
+                        "landscape:hidden lg:landscape:block -bottom-10 md:-bottom-2 animate-in delay-1000 duration-500 fade-in fill-mode-both select-none absolute w-full text-center font-mono",
+                        isLoadingImage && "hidden",
+                    )}
+                >
                     Press to enter
                 </div>
             </div>
