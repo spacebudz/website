@@ -103,7 +103,11 @@ export function Bud({ id, metadata, asset }: BudProps) {
                         </div>
                         <div className="w-full h-full lg:w-2/5 flex flex-col items-center px-6 lg:px-0 pt-6 lg:pt-0 lg:pr-12 animate-out opacity-0 fade-out-100 delay-1000 duration-1000 fill-mode-forwards">
                             <div className="text-3xl font-bold text-left w-full">
-                                <a href="#">{metadata.type}</a>
+                                <a
+                                    href={`/collection?species=${metadata.type}`}
+                                >
+                                    {metadata.type}
+                                </a>
                             </div>
                             <div className="flex w-full mt-4 space-x-2">
                                 <Card className="w-full max-w-[300px] h-[100px] overflow-hidden relative border-none">
