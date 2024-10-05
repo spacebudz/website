@@ -33,7 +33,7 @@ export function Combobox(
         gadgetsRange,
         setGadgetsRange,
     }: {
-        category: "species" | "gadgets";
+        category: "species" | "gadgets" | "emotions";
         data: string[];
         value: string[];
         onChange: (value: string[]) => void;
@@ -55,8 +55,12 @@ export function Combobox(
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className="w-full justify-between touch-manipulation"
+                    className="w-full max-w-[285px] justify-between touch-manipulation"
                 >
+                    {category === "emotions" && value.length <= 0 &&
+                        "None applied"}
+                    {category === "emotions" && value.length > 0 &&
+                        `${value.length} applied`}
                     {category === "species" && value.length <= 0 &&
                         "None applied"}
                     {category === "species" && value.length > 0 &&

@@ -14,6 +14,7 @@ import {
   ShuffleIcon,
   TextAlignBottomIcon,
   TextAlignTopIcon,
+  ValueNoneIcon,
 } from "@radix-ui/react-icons";
 import { Input } from "@/components/ui/input/mod.tsx";
 import { Button } from "@/components/ui/button/mod.tsx";
@@ -23,6 +24,13 @@ import {
   type FilterResult,
   MetadataCollection,
 } from "@/lib/filter_collection.ts";
+import { useMode } from "@/islands/providers/mode_provider.tsx";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/islands/ui/popover/mod.tsx";
+import * as RovingTabIndex from "https://esm.sh/@radix-ui/react-roving-focus@1.1.0?external=react,react-dom,react/jsx-runtime&target=es2022";
 
 const speciesData = [
   "Alien",
@@ -86,6 +94,40 @@ const gadgetsData = [
   "X-Ray",
 ];
 
+const gadgetsDataExt = [
+  "Flag (l)",
+  "Flag (r)",
+  "Cardano (l)",
+  "Cardano (r)",
+  "Sword (l)",
+  "Sword (r)",
+  "Fire sword (l)",
+  "Ice sword (l)",
+  "Flowers (l)",
+  "Flowers (r)",
+  "Revolver (l)",
+  "Revolver (r)",
+  "Amulet (l)",
+  "Amulet (n)",
+  "Belt (w/ pipe)",
+  "Belt (w/o pipe)",
+];
+
+const emotionsData = [
+  "Amazed",
+  "Angry",
+  "Confused",
+  "Greedy",
+  "Happy",
+  "Joking",
+  "Laughing",
+  "Sad",
+  "Serious",
+  "Shocked",
+  "Shy",
+  "Superior",
+];
+
 const isLongHoveringTriggered = signal<boolean>();
 
 export function ScrollPanel(
@@ -107,6 +149,8 @@ export function ScrollPanel(
     (IS_BROWSER && new URL(globalThis.location.href)) as URL,
   );
 
+  const { mode } = useMode();
+
   const [sort, setSort] = React.useState<"asc" | "desc" | null>(() =>
     url.searchParams?.get("sort") as "asc" | "desc" | null || null
   );
@@ -117,7 +161,10 @@ export function ScrollPanel(
     () => url.searchParams?.getAll("species") || [],
   );
   const [gadgets, setGadgets] = React.useState<string[]>(
-    () => url.searchParams?.getAll("gadgets") || [],
+    () => [
+      ...url.searchParams?.getAll("gadgets") || [],
+      ...url.searchParams?.getAll("gadgets_ext") || [],
+    ],
   );
   const [isGadgetsUnion, setIsGadgetsUnion] = React.useState<boolean>(
     () => JSON.parse(url.searchParams?.get("gadgets_union") || "false"),
@@ -127,6 +174,16 @@ export function ScrollPanel(
       url.searchParams?.get("gadgets_range") || JSON.stringify([0, 12]),
     )
   );
+  const [emotions, setEmotions] = React.useState<string[]>(() =>
+    url.searchParams?.getAll("emotions") || []
+  );
+  const [colors, setColors] = React.useState<
+    { speciesColor?: string; suitColor?: string; glovesColor?: string }
+  >(() => ({
+    speciesColor: url.searchParams?.get("species_color") || undefined,
+    suitColor: url.searchParams?.get("suit_color") || undefined,
+    glovesColor: url.searchParams?.get("gloves_color") || undefined,
+  }));
 
   const urlSearchParams = React.useMemo(() => {
     const params = new URLSearchParams();
@@ -141,10 +198,32 @@ export function ScrollPanel(
       params.append("species", s);
     });
     gadgets.forEach((g) => {
-      params.append("gadgets", g);
+      if (
+        g.includes("(")
+      ) {
+        params.append("gadgets_ext", g);
+      } else {
+        params.append("gadgets", g);
+      }
     });
+    emotions.forEach((e) => {
+      params.append("emotions", e);
+    });
+    if (colors.speciesColor) params.set("species_color", colors.speciesColor);
+    if (colors.suitColor) params.set("suit_color", colors.suitColor);
+    if (colors.glovesColor) params.set("gloves_color", colors.glovesColor);
+
     return params;
-  }, [sort, id, species, gadgets, isGadgetsUnion, gadgetsRange]);
+  }, [
+    sort,
+    id,
+    species,
+    gadgets,
+    isGadgetsUnion,
+    gadgetsRange,
+    emotions,
+    colors,
+  ]);
 
   const hasMatchingParams = typeof url.searchParams === "undefined" ||
     urlSearchParams.toString() === url.searchParams.toString();
@@ -185,6 +264,24 @@ export function ScrollPanel(
     globalThis.scrollTo({ top: 0 });
   }
 
+  function resetAll() {
+    setId({ value: "" });
+    setSort(null);
+    setSpecies([]);
+    setGadgets([]);
+    setIsGadgetsUnion(false);
+    setGadgetsRange([0, 12]);
+    setEmotions([]);
+    setColors({});
+    applyFilter({ reset: true });
+  }
+
+  const hasMounted = React.useRef(false);
+  React.useEffect(() => {
+    if (hasMounted.current) resetAll();
+    else hasMounted.current = true;
+  }, [mode]);
+
   React.useEffect(() => {
     isStickyRef.current = isSticky;
     isShowingRef.current = isShowing;
@@ -193,6 +290,7 @@ export function ScrollPanel(
   React.useEffect(() => {
     let startY = 0;
     let currentY = 0;
+    const offset = mode === "core" ? -130 : -254;
 
     if (ref.current) {
       const handleTouchStart = (event: TouchEvent) => {
@@ -211,7 +309,7 @@ export function ScrollPanel(
           const deltaY = currentY - startY;
 
           if (deltaY > 0) {
-            setTop(Math.min(-130 + Math.floor(deltaY), -1));
+            setTop(Math.min(offset + Math.floor(deltaY), -1));
           }
         }
       };
@@ -242,6 +340,7 @@ export function ScrollPanel(
       ref={ref}
       className={cn(
         "w-full h-full sticky -top-[130px] mt-2 shadow-none overflow-hidden z-20 will-change-[top,transform]",
+        mode === "advanced" && "-top-[254px]",
         isSticky &&
           "rounded-t-none border shadow",
         isSticky && !Number.isInteger(top) &&
@@ -252,9 +351,9 @@ export function ScrollPanel(
       )}
       style={Number.isInteger(top) ? { top: `${top}px` } : {}}
     >
-      <CardContent className="py-14 lg:py-6 lg:px-20 w-full h-[250px] lg:h-[220px] grid grid-cols-2 lg:grid-cols-3 justify-start items-center gap-6 lg:gap-x-32 relative">
-        <div className="flex items-center justify-center w-full h-full relative">
-          <div className="absolute -top-6 lg:top-6 left-0 font-semibold text-lg mb-4">
+      <CardContent className="pt-7 pb-[60px] md:pt-12 md:pb-24 md:px-20 w-full grid grid-cols-2 lg:grid-cols-3 justify-start items-center gap-5 md:gap-x-32 md:gap-y-10 relative">
+        <div className="flex flex-col items-start justify-start w-full">
+          <div className="font-semibold text-lg mb-2 md:mb-4">
             Species
           </div>
           <Combobox
@@ -264,13 +363,26 @@ export function ScrollPanel(
             onChange={setSpecies}
           />
         </div>
-        <div className="flex items-center justify-center w-full h-full relative">
-          <div className="absolute -top-6 lg:top-6 left-0 font-semibold text-lg mb-4">
+        <div className="flex flex-col items-start justify-start w-full">
+          <div className="font-semibold text-lg mb-2 md:mb-4">
             Gadgets
           </div>
           <Combobox
             category="gadgets"
-            data={gadgetsData}
+            data={mode === "core" ? gadgetsData : [
+              ...gadgetsData.filter((g) =>
+                ![
+                  "Cardano",
+                  "Flag",
+                  "Sword",
+                  "Flowers",
+                  "Revolver",
+                  "Amulet",
+                  "Belt",
+                ].includes(g)
+              ),
+              ...gadgetsDataExt,
+            ].sort()}
             value={gadgets}
             onChange={setGadgets}
             isGadgetsUnion={isGadgetsUnion}
@@ -279,40 +391,131 @@ export function ScrollPanel(
             setGadgetsRange={setGadgetsRange}
           />
         </div>
-        <div className="flex items-center justify-center relative w-full h-full col-span-2 lg:col-span-1">
-          <div className="absolute -top-6 lg:top-6 left-0 font-semibold text-lg mb-4">
+        <div className="flex flex-col items-start justify-start w-full col-span-2 lg:col-span-1">
+          <div className="font-semibold text-lg mb-2 md:mb-4">
             Tag
           </div>
-          <Input
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !hasMatchingParams) {
-                applyFilter();
-              }
-            }}
-            className="mr-10"
-            placeholder="Search id..."
-            value={id.value}
-            maxLength={4}
-            onChange={(e) =>
-              setId(
-                { value: e.target.value.replace(/[^0-9]/g, "") },
-              )}
-          />
-          <Button
-            variant="outline"
-            onClick={() => {
-              setSort((v) => {
-                if (v === "asc") return "desc";
-                return "asc";
-              });
-            }}
-          >
-            Sort
-            {!sort && <ShuffleIcon className="ml-1 scale-[85%]" />}
-            {sort === "asc" && <TextAlignTopIcon className="ml-1 mt-1" />}
-            {sort === "desc" && <TextAlignBottomIcon className="ml-1 -mt-1" />}
-          </Button>
+          <div className="flex">
+            <Input
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !hasMatchingParams) {
+                  applyFilter();
+                }
+              }}
+              className="mr-10"
+              placeholder="Search id..."
+              value={id.value}
+              maxLength={4}
+              onChange={(e) =>
+                setId(
+                  { value: e.target.value.replace(/[^0-9]/g, "") },
+                )}
+            />
+            <Button
+              variant="outline"
+              onClick={() => {
+                setSort((v) => {
+                  if (v === "asc") return "desc";
+                  return "asc";
+                });
+              }}
+            >
+              Sort
+              {!sort && <ShuffleIcon className="ml-1 scale-[85%]" />}
+              {sort === "asc" && <TextAlignTopIcon className="ml-1 mt-1" />}
+              {sort === "desc" &&
+                <TextAlignBottomIcon className="ml-1 -mt-1" />}
+            </Button>
+          </div>
         </div>
+        {mode === "advanced" && (
+          <>
+            <div className="flex flex-col items-start justify-start w-full col-span-1">
+              <div className="font-semibold text-lg mb-2 md:mb-4">
+                Emotions
+              </div>
+              <Combobox
+                category="emotions"
+                data={emotionsData}
+                value={emotions}
+                onChange={setEmotions}
+              />
+            </div>
+            <div className="flex flex-col items-start justify-start w-full col-span-1 lg:col-span-2">
+              <div className="font-semibold text-lg mb-2 md:mb-4">
+                Colors
+              </div>
+              <div className="flex space-x-4">
+                <ColorItem
+                  colors={[
+                    "Black",
+                    "Blue",
+                    "Brown",
+                    "Gray",
+                    "Green",
+                    "Orange",
+                    "Pink",
+                    "Purple",
+                    "Red",
+                    "White",
+                    "Yellow",
+                  ]}
+                  value={colors.speciesColor}
+                  onChange={(value) =>
+                    setColors((c) => ({ ...c, speciesColor: value }))}
+                >
+                  <img
+                    draggable={false}
+                    src="/head.svg"
+                    className="w-7 dark:invert"
+                  />
+                </ColorItem>
+                <ColorItem
+                  colors={[
+                    "Black",
+                    "Blue",
+                    "Brown",
+                    "Gray",
+                    "Green",
+                    "Pink",
+                    "Purple",
+                    "Red",
+                    "Yellow",
+                  ]}
+                  value={colors.suitColor}
+                  onChange={(value) =>
+                    setColors((c) => ({ ...c, suitColor: value }))}
+                >
+                  <img
+                    draggable={false}
+                    src="/suit.svg"
+                    className="w-7 dark:invert"
+                  />
+                </ColorItem>
+                <ColorItem
+                  colors={[
+                    "Black",
+                    "Blue",
+                    "Brown",
+                    "Green",
+                    "Pink",
+                    "Purple",
+                    "Red",
+                  ]}
+                  value={colors.glovesColor}
+                  onChange={(value) =>
+                    setColors((c) => ({ ...c, glovesColor: value }))}
+                >
+                  <img
+                    draggable={false}
+                    src="/gloves.svg"
+                    className="w-7 dark:invert"
+                  />
+                </ColorItem>
+              </div>
+            </div>
+          </>
+        )}
         <Button
           disabled={hasMatchingParams}
           variant={hasMatchingParams ? "secondary" : "default"}
@@ -338,20 +541,90 @@ export function ScrollPanel(
           className="absolute right-3 top-3"
           variant="ghost"
           size="icon"
-          onClick={() => {
-            setId({ value: "" });
-            setSort(null);
-            setSpecies([]);
-            setGadgets([]);
-            setIsGadgetsUnion(false);
-            setGadgetsRange([0, 12]);
-            applyFilter({ reset: true });
-          }}
+          onClick={resetAll}
         >
           <ResetIcon />
         </Button>
       </CardContent>
     </Card>
+  );
+}
+
+function ColorItem(
+  { children, colors, value, onChange }: {
+    colors: string[];
+    value?: string;
+    onChange?: (value: string) => void;
+  } & React.PropsWithChildren,
+) {
+  const colorMap: Record<string, string> = {
+    "Blue": "#3b82f6",
+    "Green": "#10b981",
+    "Red": "#ef4444",
+    "Yellow": "#eab308",
+    "Purple": "#a855f7",
+    "Black": "black",
+    "Pink": "#ec4899",
+    "Brown": "#977669",
+    "Orange": "#f97316",
+    "White": "white",
+    "Gray": "#6b7280",
+  };
+  const [open, setOpen] = React.useState(false);
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          className="border touch-manipulation"
+          size="icon"
+          variant="secondary"
+          style={{ backgroundColor: value && colorMap[value] }}
+        >
+          <div
+            className={cn(
+              value && "invert dark:invert-0",
+              value === "White" && "invert-0 dark:invert",
+            )}
+          >
+            {children}
+          </div>
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-fit">
+        <RovingTabIndex.Root asChild>
+          <div className="grid grid-cols-4 gap-2">
+            {colors.map((color, index) => (
+              <RovingTabIndex.Item asChild key={index}>
+                <Button
+                  tabIndex={0}
+                  variant="outline"
+                  size="icon"
+                  style={{ backgroundColor: colorMap[color] }}
+                  onClick={() => {
+                    onChange?.(color);
+                    setOpen(false);
+                  }}
+                />
+              </RovingTabIndex.Item>
+            ))}
+            <RovingTabIndex.Item asChild>
+              <Button
+                disabled={!value}
+                variant="outline"
+                size="icon"
+                onClick={() => {
+                  onChange?.("");
+                  setOpen(false);
+                }}
+              >
+                <ValueNoneIcon />
+              </Button>
+            </RovingTabIndex.Item>
+          </div>
+        </RovingTabIndex.Root>
+        {}
+      </PopoverContent>
+    </Popover>
   );
 }
 

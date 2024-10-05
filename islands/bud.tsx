@@ -35,6 +35,16 @@ export function Bud({ id, metadata, asset }: BudProps) {
         false,
     );
 
+    const jsonMetadata = JSON.stringify(
+        Object.fromEntries(
+            Object.entries(metadata).filter(([key]) =>
+                key !== "extendedProperties"
+            ),
+        ),
+        null,
+        2,
+    );
+
     React.useEffect(() => {
         const image = new Image();
         image.src = src;
@@ -157,7 +167,7 @@ export function Bud({ id, metadata, asset }: BudProps) {
                                     <CardContent className="flex items-center justify-center relative">
                                         <pre className="whitespace-pre-wrap break-all text-xs">
                                         <code>
-                                            {JSON.stringify(metadata,null, 2)}
+                                            {jsonMetadata}
                                         </code>
                                         </pre>
                                     </CardContent>

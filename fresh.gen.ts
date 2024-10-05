@@ -18,8 +18,9 @@ import * as $combobox from "./islands/combobox.tsx";
 import * as $hooks_use_is_intersecting from "./islands/hooks/use_is_intersecting.tsx";
 import * as $hooks_use_observe_dimension from "./islands/hooks/use_observe_dimension.tsx";
 import * as $hooks_use_toast from "./islands/hooks/use_toast.tsx";
+import * as $providers_mode_provider from "./islands/providers/mode_provider.tsx";
 import * as $providers_theme_provider from "./islands/providers/theme_provider.tsx";
-import * as $toggle_dark_mode from "./islands/toggle_dark_mode.tsx";
+import * as $toggle from "./islands/toggle.tsx";
 import * as $ui_accordion_mod from "./islands/ui/accordion/mod.tsx";
 import * as $ui_alert_dialog_mod from "./islands/ui/alert_dialog/mod.tsx";
 import * as $ui_aspect_ratio_mod from "./islands/ui/aspect_ratio/mod.tsx";
@@ -79,8 +80,9 @@ const manifest = {
     "./islands/hooks/use_is_intersecting.tsx": $hooks_use_is_intersecting,
     "./islands/hooks/use_observe_dimension.tsx": $hooks_use_observe_dimension,
     "./islands/hooks/use_toast.tsx": $hooks_use_toast,
+    "./islands/providers/mode_provider.tsx": $providers_mode_provider,
     "./islands/providers/theme_provider.tsx": $providers_theme_provider,
-    "./islands/toggle_dark_mode.tsx": $toggle_dark_mode,
+    "./islands/toggle.tsx": $toggle,
     "./islands/ui/accordion/mod.tsx": $ui_accordion_mod,
     "./islands/ui/alert_dialog/mod.tsx": $ui_alert_dialog_mod,
     "./islands/ui/aspect_ratio/mod.tsx": $ui_aspect_ratio_mod,

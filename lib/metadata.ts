@@ -1,4 +1,4 @@
-import metadataCollectionWithoutType from "https://raw.githubusercontent.com/spacebudz/wormhole/refs/heads/main/artifacts/metadata.json" with {
+import metadataCollectionWithoutType from "@/data/metadata_extended.json" with {
     type: "json",
 };
 import type { MetadataCollection } from "@/lib/filter_collection.ts";

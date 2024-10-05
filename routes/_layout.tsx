@@ -1,5 +1,5 @@
 import { PageProps } from "$fresh/server.ts";
-import { ModeToggle } from "@/islands/toggle_dark_mode.tsx";
+import { ModeToggle, ThemeToggle } from "@/islands/toggle.tsx";
 import { Button } from "@/components/ui/button/mod.tsx";
 import { DiscordLogoIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
 import { Head } from "$fresh/runtime.ts";
@@ -179,11 +179,16 @@ function Footer() {
                     className="w-16 h-16 invert dark:invert-0 pointer-events-none"
                 />
             </div>
-            <div className="flex w-full mt-4 items-center justify-between">
-                <div className="opacity-70 text-xs md:text-sm font-light">
+            <div className="flex w-full -mt-10 items-end justify-between">
+                <div className="opacity-70 text-xs md:text-sm font-light text-left">
                     © SpaceBudz. All rights reserved.
                 </div>
-                <ModeToggle />
+                <div className="flex flex-col items-end">
+                    <div className="mb-8">
+                        <ModeToggle />
+                    </div>
+                    <ThemeToggle />
+                </div>
             </div>
         </div>
     );
