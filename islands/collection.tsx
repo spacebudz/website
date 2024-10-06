@@ -348,7 +348,7 @@ export function ScrollPanel(
       onClick={() => setIsShowing(true)}
       ref={ref}
       className={cn(
-        "w-full h-full sticky -top-[130px] mt-2 shadow-none overflow-hidden z-[99] will-change-[top,transform]",
+        "w-full h-full sticky -top-[130px] mt-2 shadow-none overflow-hidden z-50 will-change-[top,transform]",
         mode === "advanced" && "-top-[254px]",
         isSticky &&
           "rounded-t-none border shadow",
