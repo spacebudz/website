@@ -31,6 +31,7 @@ import {
   PopoverTrigger,
 } from "@/islands/ui/popover/mod.tsx";
 import * as RovingTabIndex from "https://esm.sh/@radix-ui/react-roving-focus@1.1.0?external=react,react-dom,react/jsx-runtime&target=es2022";
+import { useIsKeyboardOpen } from "@/islands/hooks/use_is_keyboard_open.tsx";
 
 const speciesData = [
   "Alien",
@@ -150,6 +151,8 @@ export function ScrollPanel(
   );
 
   const { mode } = useMode();
+  const isKeyboardOpen = useIsKeyboardOpen();
+  const isKeyboardOpenRef = React.useRef(isKeyboardOpen);
 
   const [sort, setSort] = React.useState<"asc" | "desc" | null>(() =>
     url.searchParams?.get("sort") as "asc" | "desc" | null || null
@@ -229,6 +232,7 @@ export function ScrollPanel(
     urlSearchParams.toString() === url.searchParams.toString();
 
   React.useEffect(() => {
+    let timeout: number;
     function handleScroll() {
       const activeElement = document.activeElement;
       if (
@@ -238,9 +242,13 @@ export function ScrollPanel(
         activeElement.blur();
       }
 
-      if (isStickyRef.current) {
-        setIsShowing(false);
-      }
+      clearTimeout(timeout);
+
+      timeout = setTimeout(() => {
+        if (!isKeyboardOpenRef.current && isStickyRef.current) {
+          setIsShowing(false);
+        }
+      }, 10);
     }
     globalThis.addEventListener("scroll", handleScroll);
     return () => {
@@ -285,7 +293,8 @@ export function ScrollPanel(
   React.useEffect(() => {
     isStickyRef.current = isSticky;
     isShowingRef.current = isShowing;
-  }, [isSticky, isShowing]);
+    isKeyboardOpenRef.current = isKeyboardOpen;
+  }, [isSticky, isShowing, isKeyboardOpen]);
 
   React.useEffect(() => {
     let startY = 0;
@@ -402,7 +411,10 @@ export function ScrollPanel(
                   applyFilter();
                 }
               }}
-              className="mr-10"
+              className={cn(
+                "mr-10 max-w-[200px]",
+                isMobile && "focus:text-base",
+              )}
               placeholder="Search id..."
               value={id.value}
               maxLength={4}
@@ -412,6 +424,7 @@ export function ScrollPanel(
                 )}
             />
             <Button
+              className="touch-manipulation"
               variant="outline"
               onClick={() => {
                 setSort((v) => {

@@ -16,6 +16,7 @@ import * as $circle_animation_mod from "./islands/circle_animation/mod.tsx";
 import * as $collection from "./islands/collection.tsx";
 import * as $combobox from "./islands/combobox.tsx";
 import * as $hooks_use_is_intersecting from "./islands/hooks/use_is_intersecting.tsx";
+import * as $hooks_use_is_keyboard_open from "./islands/hooks/use_is_keyboard_open.tsx";
 import * as $hooks_use_observe_dimension from "./islands/hooks/use_observe_dimension.tsx";
 import * as $hooks_use_toast from "./islands/hooks/use_toast.tsx";
 import * as $providers_mode_provider from "./islands/providers/mode_provider.tsx";
@@ -78,6 +79,7 @@ const manifest = {
     "./islands/collection.tsx": $collection,
     "./islands/combobox.tsx": $combobox,
     "./islands/hooks/use_is_intersecting.tsx": $hooks_use_is_intersecting,
+    "./islands/hooks/use_is_keyboard_open.tsx": $hooks_use_is_keyboard_open,
     "./islands/hooks/use_observe_dimension.tsx": $hooks_use_observe_dimension,
     "./islands/hooks/use_toast.tsx": $hooks_use_toast,
     "./islands/providers/mode_provider.tsx": $providers_mode_provider,

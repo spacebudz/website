@@ -122,7 +122,7 @@ export function Combobox(
                     <CommandInput
                         ref={focusRef}
                         placeholder={`Search ${category}...`}
-                        className="h-9"
+                        className={cn("h-9", isMobile && "focus:text-base")}
                     />
                     <CommandList>
                         <CommandEmpty>No {category} found.</CommandEmpty>
