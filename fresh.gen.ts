@@ -10,6 +10,7 @@ import * as $api_filter_collection from "./routes/api/filter_collection.ts";
 import * as $collection_id_ from "./routes/collection/[id].tsx";
 import * as $collection_index from "./routes/collection/index.tsx";
 import * as $index from "./routes/index.tsx";
+import * as $spacebud_id_ from "./routes/spacebud/[id].tsx";
 import * as $base from "./islands/base.tsx";
 import * as $bud from "./islands/bud.tsx";
 import * as $circle_animation_mod from "./islands/circle_animation/mod.tsx";
@@ -71,6 +72,7 @@ const manifest = {
     "./routes/collection/[id].tsx": $collection_id_,
     "./routes/collection/index.tsx": $collection_index,
     "./routes/index.tsx": $index,
+    "./routes/spacebud/[id].tsx": $spacebud_id_,
   },
   islands: {
     "./islands/base.tsx": $base,
