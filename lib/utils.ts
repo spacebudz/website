@@ -6,8 +6,8 @@ export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
 }
 
-export const isMobile = "ontouchstart" in window ||
-    navigator.maxTouchPoints > 0;
+export const isMobile = "ontouchstart" in globalThis ||
+    globalThis.navigator.maxTouchPoints > 0;
 
 export function idToBud(id: number): string {
     return toLabel(222) + fromText(`Bud${id}`);
