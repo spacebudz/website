@@ -17,7 +17,7 @@
   "exclude": ["**/_fresh/*"],
   "imports": {
     "@/": "./",
-    "$fresh/": "https://deno.land/x/fresh@1.7.1/",
+    "$fresh/": "https://deno.land/x/fresh@1.7.3/",
     "preact": "https://esm.sh/preact@10.23.2",
     "preact/": "https://esm.sh/preact@10.23.2/",
     "react": "https://esm.sh/preact@10.23.2/compat",
@@ -91,5 +91,5 @@
       "meta"
     ]
   },
-  "nodeModulesDir": true
+  "nodeModulesDir": "auto"
 }
