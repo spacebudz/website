@@ -1,8 +1,10 @@
 import type { Handlers, PageProps } from "$fresh/server.ts";
 import { metadataCollection } from "@/lib/metadata.ts";
-import { Bud } from "@/islands/bud.tsx";
+import { BudBody, BudHeader } from "@/islands/bud.tsx";
 import { idToBud, ipfsToHttps } from "@/lib/utils.ts";
 import { Head } from "$fresh/runtime.ts";
+import { Button } from "@/components/ui/button/mod.tsx";
+import { ChevronLeftIcon } from "@radix-ui/react-icons";
 
 export const handler: Handlers = {
     GET(_req, ctx) {
@@ -48,11 +50,21 @@ export default function BudPage(props: PageProps) {
                     key="og:image"
                 />
             </Head>
-            <Bud
-                id={id}
-                metadata={metadata}
-                asset={asset}
-            />
+            <div className="w-full flex flex-col items-center">
+                <div className="flex items-center justify-center h-[10vh] w-full pb-6 pt-10 lg:py-0">
+                    <BudHeader>
+                        <Button variant="ghost" className="px-10 relative">
+                            <ChevronLeftIcon className="w-6 h-6 absolute left-0" />
+                            <div className="text-4xl font-black">#{id}</div>
+                        </Button>
+                    </BudHeader>
+                </div>
+                <BudBody
+                    id={id}
+                    metadata={metadata}
+                    asset={asset}
+                />
+            </div>
         </>
     );
 }

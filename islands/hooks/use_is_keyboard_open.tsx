@@ -8,7 +8,7 @@ export function useIsKeyboardOpen(
 
     React.useEffect(() => {
         function listener() {
-            const newState = window.screen.height - minKeyboardHeight >
+            const newState = globalThis.screen.height - minKeyboardHeight >
                 globalThis.visualViewport!.height;
             if (isKeyboardOpen != newState) {
                 setIsKeyboardOpen(newState);
