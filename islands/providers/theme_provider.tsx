@@ -26,9 +26,10 @@ const ThemeProviderContext = React.createContext<ThemeProviderState>(
     initialState,
 );
 
-const isForcingDark = (globalThis as typeof globalThis & {
-    isForcingDark?: boolean;
-}).isForcingDark;
+const isForcingDark = IS_BROWSER &&
+    globalThis.document.documentElement.getAttribute(
+        "data-force-dark",
+    );
 
 export function ThemeProvider({
     children,

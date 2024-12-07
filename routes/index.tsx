@@ -8,7 +8,7 @@ export default function BasePage() {
                 <script
                     dangerouslySetInnerHTML={{
                         __html:
-                            `window.isForcingDark=true;document.documentElement.classList.remove("light");document.documentElement.classList.add("dark");`,
+                            `document.documentElement.setAttribute("data-force-dark","true");document.documentElement.classList.remove("light");document.documentElement.classList.add("dark");`,
                     }}
                 />
             </Head>
