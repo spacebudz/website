@@ -105,20 +105,6 @@ function Footer() {
             >
               Nebula
             </a>
-            <a
-              href="https://app.spacebudz.io"
-              target="_blank"
-              className="hover:underline underline-offset-4"
-            >
-              Store
-            </a>
-            <a
-              href="https://app.spacebudz.io/wormhole"
-              target="_blank"
-              className="hover:underline underline-offset-4"
-            >
-              Wormhole
-            </a>
           </div>
         </div>
         <div className="flex items-end space-x-4">
