@@ -92,7 +92,7 @@ function Footer() {
               Guide
             </a>
             <a
-              href="https://app.spacebudz.io/license"
+              href="/license.pdf"
               target="_blank"
               className="hover:underline underline-offset-4"
             >
