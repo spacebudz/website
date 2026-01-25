@@ -58,9 +58,19 @@ function Footer() {
   return (
     <div className="w-full text-center mt-72 p-8 md:p-20 relative flex items-center justify-center flex-col">
       <div className="w-full flex flex-col-reverse lg:flex-row gap-14">
-        <div className="max-w-md text-left text-xl font-mono">
-          In the vastness of space, true freedom is found not in the stars, but
-          in the code that binds them.
+        <div className="flex flex-col text-left w-full">
+          <div className="max-w-md text-xl font-mono">
+            In the vastness of space, true freedom is found not in the stars,
+            but in the code that binds them.
+          </div>
+          <div className="text-sm md:text font-light break-all mt-4">
+            <a
+              href="https://github.com/spacebudz/wormhole"
+              className="hover:underline"
+            >
+              4523c5e21d409b81c95b45b0aea275b8ea1406e6cafea5583b9f8a5f
+            </a>
+          </div>
         </div>
         <div className="w-full flex justify-center space-x-20">
           <div className="flex flex-col items-start space-y-3">
